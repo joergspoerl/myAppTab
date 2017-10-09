@@ -1,3 +1,35 @@
 page-home {
+    .home {
+        background-color: color($colors, primary);
+        color:color($colors, light);
+        margin-top: 30px;
+    }
 
+    .toolbar-title {
+        text-align:center;
+    }
+
+    // not work ??
+    .tabs-md .tab-button-icon {
+        color:#ccc;
+    }
+
+    .location {
+        text-align: center;
+    }
+
+    .temp {
+        text-align: center;
+        font-size: 90px;
+        font-weight: normal;
+        color: #FFF;
+    }
+
+    .desc {
+        text-align: center;
+    }
+
+    .location .icon .desc {
+        text-align: center;
+    }
 }
