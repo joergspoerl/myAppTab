@@ -33,7 +33,7 @@ export class HomePage {
         this.location = JSON.parse(val);
       } else {
         this.location = {
-          city: 'Dresden',
+          city: 'Jena',
           state: 'DE'
         }
       }
