@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Storage } from '@ionic/storage'
 import 'rxjs/add/operator/map';
 
 /*
@@ -10,8 +11,9 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class WeatherProvider {
-  apiKey = '7adc1ac92e3f4aa41df408ddabdac351';
-  url = 'http://api.openweathermap.org/data/2.5/weather?appid=' + this.apiKey + '&q=';
+  apiKey:string       = '7adc1ac92e3f4aa41df408ddabdac351';
+  url:string          = 'http://api.openweathermap.org/data/2.5/weather?appid=' + this.apiKey + '&q=';
+  location:Location;
 
   // sample = {
   //   "coord": { "lon": -0.13, "lat": 51.51 },
@@ -29,13 +31,41 @@ export class WeatherProvider {
   //   "id": 2643743, "name": "London", "cod": 200
   // };
 
-  constructor(public http: Http) {
+  constructor(public http: Http, private storage:Storage) {
     console.log('Hello WeatherProvider Provider');
+    this.location = { city: '', state: ''};
+    this.getLocation();
   }
 
-  getWeather(city, state) {
-    return this.http.get(this.url + city + state)
+  getWeather() {
+    return this.http.get(this.url + this.location.city + ',' + this.location.state)
       .map(res => res.json());
   }
 
+  setLocation(location:Location) {
+    this.location = location;
+    this.storage.set('location', JSON.stringify(location))
+    console.log("setLocation()", location);
+  }
+
+  getLocation() {
+    this.storage.get('location').then((val => {
+      if (val != null) {
+        this.location = JSON.parse(val);
+      } else {
+        this.location = {
+          city: 'Dresden',
+          state: 'DE'
+        }
+      }
+    }))
+  }
+
+
+}
+
+// Own Type
+export class Location {
+  city: string;
+  state: string;
 }

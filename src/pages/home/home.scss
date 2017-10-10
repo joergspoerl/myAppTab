@@ -9,10 +9,6 @@ page-home {
         text-align:center;
     }
 
-    // not work ??
-    .tabs-md .tab-button-icon {
-        color:#ccc;
-    }
 
     .location {
         text-align: center;
@@ -32,4 +28,12 @@ page-home {
     .location .icon .desc {
         text-align: center;
     }
+
+    .item {
+        background-color: color($colors, primary);
+    }
 }
+    // not work ??
+    .tabs-md .tab-button-icon {
+        color:#ccc;
+    }

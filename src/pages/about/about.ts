@@ -11,8 +11,8 @@ export class AboutPage {
 
   constructor(
     public navCtrl: NavController,
-) {
-  //    public myDataService: MyDataService
+  ) {
+    //    public myDataService: MyDataService
   }
 
 }

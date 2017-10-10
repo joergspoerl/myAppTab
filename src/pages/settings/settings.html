@@ -7,12 +7,38 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>settings</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <form (ngSubmit)="save(form)">
 
+            <ion-item>
+              <ion-label fixed>
+                City
+              </ion-label>
+              <ion-input [(ngModel)]="location.city" name="city" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label fixed>
+                State
+              </ion-label>
+              <ion-input [(ngModel)]="location.state"  name="state" type="text"></ion-input>
+            </ion-item>
+
+            <button ion-button type="submit" block>Save</button>
+
+          </form>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
