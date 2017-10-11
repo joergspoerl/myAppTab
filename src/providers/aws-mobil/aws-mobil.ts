@@ -12,10 +12,13 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AwsMobilProvider {
 
-  urlToken: string = 'https://aws.emilfrey.net/AwsMobile/token?SystemID=1';
+  baseUrl: string = 'https://aws.emilfrey.net/AwsMobile/';
+  tokenUrl: string = 'token?SystemID=1';
   usr: string = 'Mobile';
   pwd: string = '!mobileCheck!';
-  headers: Headers = new Headers ({ 'Content-Type': ['application/x-www-form-urlencoded', 'application/json']});
+  token:Token;
+
+  awsRequestLog:AwsRequestLogEntry[];
 
   constructor(public http: Http) {
     console.log('Hello AwsMobilProvider Provider');
@@ -24,18 +27,61 @@ export class AwsMobilProvider {
   getToken() {
     console.log('getToken Start !');
     
-      //let headers = { 'Content-Type': ['application/x-www-form-urlencoded', 'application/json']};
-      let body = 'username=' + this.usr + '&password=' + this.pwd +'&grant_type=password';
+    let body = 'username=' + this.usr + '&password=' + this.pwd + '&grant_type=password';
+    let headers: Headers = new Headers ({ 'Content-Type': ['application/x-www-form-urlencoded', 'application/json']});
     
-
-    //return 
-
-    console.log("->");
-    
-    let token = this.http.post(this.urlToken, body, {headers: this.headers} )
+    this.http.post(this.baseUrl + this.tokenUrl, body, {headers: headers} )
       .toPromise()
-      .then(data => console.log("Response: ", data), error => console.log("Response ERROR: ", error
+      .then(
+        response  => { 
+          this.token = response.json() as Token;
+          console.log("getToken -> Response: ", this.token);
+          this.getRequestLog();
+        },
+        error => console.log("Response ERROR: " , error
     ));
   }
 
+  getRequestLog() {
+    let headers: Headers = new Headers (
+      { 'Content-Type': ['application/x-www-form-urlencoded', 'application/json'],
+      'Authorization': 'bearer ' + this.token.access_token
+      });
+
+    this.http.get (this.baseUrl + 'AwsMobileApi/GetRequestLog', { headers: headers})
+    .toPromise()
+    .then(
+      response => {
+        console.log(response);
+        this.awsRequestLog = response.json() as AwsRequestLogEntry[];
+      },
+      error => {
+        console.log(error);
+      }
+    )  
+
+  }
+
+
+  }
+
+export class Token {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+}
+
+export class AwsRequestLogEntry {
+  
+    "AWS_LOG_ID": number;
+    "AWS_SESSION": string;
+    "AWS_LOG_DATE": string;
+    "AWS_LOG_RET_CODE": number;
+    "AWS_LOG_SYS_ID": number;
+    "AWS_LOG_REQ_ID": number;
+    "AWS_LOG_CLIENT": string;
+    "AWS_LOG_USER_ID": string;
+    "REQ_NAME": string;
+    "SYS_NAME": string;
+    "COLOR": string;
 }

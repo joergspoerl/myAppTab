@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AwsMobilProvider } from '../../../providers/aws-mobil/aws-mobil'
+import { AwsMobilProvider, AwsRequestLogEntry } from '../../../providers/aws-mobil/aws-mobil'
 /**
  * Generated class for the AwsLogPage page.
  *
@@ -15,6 +15,8 @@ import { AwsMobilProvider } from '../../../providers/aws-mobil/aws-mobil'
 })
 export class AwsLogPage {
 
+  awsRequestLog:AwsRequestLogEntry[];
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -25,6 +27,11 @@ export class AwsLogPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsLogPage');
     this.awsMobileProvider.getToken();
-  }
+    this.awsRequestLog = this.awsMobileProvider.awsRequestLog;
 
+    setTimeout( () => {
+      console.log("timer !!!");
+      this.awsRequestLog = this.awsMobileProvider.awsRequestLog;
+    }, 10000);
+  }
 }
