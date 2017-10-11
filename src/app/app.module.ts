@@ -14,6 +14,7 @@ import { WeatherPage } from '../pages/weather/weather/weather';
 import { wSettingsPage } from '../pages/weather/wSettings/wSettings';
 
 import { AwsPage } from '../pages/aws/aws';
+import { AwsLogPage } from '../pages/aws/aws-log/aws-log';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,6 +28,7 @@ import { WeatherProvider } from '../pages/weather/providers/weather/weather';
     WeatherPage,
     wSettingsPage,
     AwsPage,
+    AwsLogPage,
     TabsPage
     ],
   imports: [
@@ -44,6 +46,7 @@ import { WeatherProvider } from '../pages/weather/providers/weather/weather';
     WeatherPage,
     wSettingsPage,
     AwsPage,
+    AwsLogPage,
     TabsPage
   ],
   providers: [

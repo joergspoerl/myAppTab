@@ -16,17 +16,17 @@
 <ion-content padding>
   <ion-list>
     
-    <template ngFor let-divider [ngForOf]="awsMenu">
+    <ng-template ngFor let-divider [ngForOf]="awsMenu">
       <ion-item-divider color="light">
         {{divider.name}}
       </ion-item-divider>
     
-      <button ion-item (click)="clickMenu(button.name)" *ngFor="let button of divider.menu">
+      <button ion-item (click)="clickMenu(button)" *ngFor="let button of divider.menu">
         <ion-icon name="{{button.icon}}" item-start></ion-icon>
         {{button.name}}
         <ion-icon name="arrow-forward" item-end></ion-icon>
       </button>
-    </template>
+    </ng-template>
 
   </ion-list>
 </ion-content>

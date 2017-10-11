@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AwsLogPage } from './aws-log/aws-log';
 
 /**
  * Generated class for the AwsPage page.
@@ -19,7 +20,7 @@ export class AwsPage {
     {
       name: 'Log Files',
       menu: [
-        { icon: 'list', name: 'Requests', page: {} }
+        { icon: 'list', name: 'Requests', page: AwsLogPage }
       ]
     },
     {
@@ -47,6 +48,7 @@ export class AwsPage {
 
   clickMenu(item) {
     console.log("clickMenu", item);
+    this.navCtrl.push(item.page);    
   }
 
 }
