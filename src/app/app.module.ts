@@ -19,6 +19,7 @@ import { AwsLogPage } from '../pages/aws/aws-log/aws-log';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WeatherProvider } from '../pages/weather/providers/weather/weather';
+import { AwsMobilProvider } from '../providers/aws-mobil/aws-mobil';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { WeatherProvider } from '../pages/weather/providers/weather/weather';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    WeatherProvider
+    WeatherProvider,
+    AwsMobilProvider
   ]
 })
 export class AppModule {}
