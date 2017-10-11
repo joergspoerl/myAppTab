@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { WeatherProvider } from '../../providers/weather/weather';
-import { Storage } from '@ionic/storage';
+import { WeatherProvider } from '../providers/weather/weather';
+import { wSettingsPage } from '../wSettings/wSettings'
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-weather',
+  templateUrl: 'weather.html'
 })
-export class HomePage {
+export class WeatherPage {
   weather: any;
   location: {
     city: string,
@@ -16,8 +16,7 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    private weatherProvider: WeatherProvider,
-    private storage: Storage) {
+    private weatherProvider: WeatherProvider) {
 
       this.location = {
         city: '',
@@ -27,17 +26,6 @@ export class HomePage {
 
   ionViewWillEnter() {
 
-    this.storage.get('location').then((val) => {
-      console.log("val", val);
-      if (val != null) {
-        this.location = JSON.parse(val);
-      } else {
-        this.location = {
-          city: 'Jena',
-          state: 'DE'
-        }
-      }
-    });
 
     setTimeout( () => {
       this.getWeather();
@@ -50,5 +38,9 @@ export class HomePage {
 
   getWeather() {
     this.weatherProvider.getWeather().subscribe(weather => { console.log(weather); this.weather = weather })
+  }
+
+  gotoSettings() {
+    this.navCtrl.push(wSettingsPage);    
   }
 }

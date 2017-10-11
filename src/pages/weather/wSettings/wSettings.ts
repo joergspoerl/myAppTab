@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { WeatherProvider } from '../../providers/weather/weather';
-import { Location } from '../../providers/weather/weather';
+import { WeatherProvider } from '../providers/weather/weather';
+import { Location } from '../providers/weather/weather';
 
-import { HomePage } from '../../pages/home/home';
+import { WeatherPage } from '../weather/weather';
 /**
  * Generated class for the SettingsPage page.
  *
@@ -13,10 +13,10 @@ import { HomePage } from '../../pages/home/home';
 
 @IonicPage()
 @Component({
-  selector: 'page-settings',
-  templateUrl: 'settings.html',
+  selector: 'page-wSettings',
+  templateUrl: 'wSettings.html',
 })
-export class SettingsPage {
+export class wSettingsPage {
 
   city: string;
   state: string;
@@ -40,6 +40,6 @@ export class SettingsPage {
   save(form) {
 
     this.weatherProvider.setLocation(this.location);
-    this.navCtrl.push(HomePage);
+    this.navCtrl.pop();
   }
 }

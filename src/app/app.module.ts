@@ -6,25 +6,26 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
 
+import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
-import { SettingsPage } from '../pages/settings/settings';
+
+import { WeatherPage } from '../pages/weather/weather/weather';
+import { wSettingsPage } from '../pages/weather/wSettings/wSettings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { WeatherProvider } from '../providers/weather/weather';
+import { WeatherProvider } from '../pages/weather/providers/weather/weather';
 
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,
-    TabsPage,
-    SettingsPage
-  ],
+    WeatherPage,
+    wSettingsPage,
+    TabsPage
+    ],
   imports: [
     BrowserModule,
     HttpModule,
@@ -37,9 +38,9 @@ import { WeatherProvider } from '../providers/weather/weather';
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,
-    TabsPage,
-    SettingsPage
+    WeatherPage,
+    wSettingsPage,
+    TabsPage
   ],
   providers: [
     StatusBar,

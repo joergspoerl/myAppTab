@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="home">
+
+  <ion-grid *ngIf="weather">
+
+    <ion-row>
+      <ion-col width-50 offset-25>
+        <h2 class="location">
+          {{weather.name}}
+        </h2>
+        <h2 class="temp">
+          {{weather.main.temp-273.15 | number:'1.1-1'}}&deg;C
+        </h2>
+        <div class="desc">
+
+          <button ion-button icon-only (click)="getWeather()">
+            <ion-icon name="refresh"></ion-icon>
+          </button>
+
+          <button ion-button icon-only (click)="gotoSettings()">
+            <ion-icon name="settings"></ion-icon>
+          </button>
+
+        </div>
+
+        <h3 class="desc">
+          {{weather.weather[0].description}}
+        </h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col width-100>
+        <ion-list>
+
+          <ion-item>
+            <ion-label fixed>
+              <strong>Temp: </strong>
+            </ion-label>
+            <ion-label>
+              {{weather.main.temp-273.15 | number:'1.1-1'}}&deg;C
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label fixed>
+              <strong>Humidity: </strong>
+            </ion-label>
+            <ion-label>
+              {{weather.main.humidity}} %
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label fixed>
+              <strong>Pressure: </strong>
+            </ion-label>
+            <ion-label>
+              {{weather.main.pressure}}
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label fixed>
+              <strong>Visibility: </strong>
+            </ion-label>
+            <ion-label>
+              {{weather.visibility}}
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label fixed>
+              <strong>Wind Speed: </strong>
+            </ion-label>
+            <ion-label>
+              {{weather.wind.speed}} m/s
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label fixed>
+              <strong>Wind deg: </strong>
+            </ion-label>
+            <ion-label>
+              {{weather.wind.deg}} &deg;
+            </ion-label>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
