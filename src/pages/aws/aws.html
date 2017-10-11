@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>aws</ion-title>
+    <ion-title>Aws</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,36 +15,18 @@
 
 <ion-content padding>
   <ion-list>
-
-    <ion-item-divider color="light">Log Files</ion-item-divider>
     
-    <ion-item>
-      <ion-icon name="list" item-start></ion-icon>
-      Requests
-      <ion-icon name="arrow-forward" item-end></ion-icon>
-    </ion-item>
-
-    <ion-item-divider color="light">Diagram</ion-item-divider>
+    <template ngFor let-divider [ngForOf]="awsMenu">
+      <ion-item-divider color="light">
+        {{divider.name}}
+      </ion-item-divider>
     
-    <ion-item>
-      <ion-icon name="pie" item-start></ion-icon>
-      Server
-      <ion-icon name="arrow-forward" item-end></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="pie" item-start></ion-icon>
-      Clients
-      <ion-icon name="arrow-forward" item-end></ion-icon>
-    </ion-item>
-
-    <ion-item-divider color="light">Settings</ion-item-divider>
-
-    <ion-item>
-      <ion-icon name="settings" item-start></ion-icon>
-      App Settings
-      <ion-icon name="arrow-forward" item-end></ion-icon>
-    </ion-item>
+      <button ion-item (click)="clickMenu(button.name)" *ngFor="let button of divider.menu">
+        <ion-icon name="{{button.icon}}" item-start></ion-icon>
+        {{button.name}}
+        <ion-icon name="arrow-forward" item-end></ion-icon>
+      </button>
+    </template>
 
   </ion-list>
 </ion-content>

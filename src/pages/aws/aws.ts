@@ -15,11 +15,38 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AwsPage {
 
+  awsMenu: any = [
+    {
+      name: 'Log Files',
+      menu: [
+        { icon: 'list', name: 'Requests', page: {} }
+      ]
+    },
+    {
+      name: 'Diagram',
+      menu: [
+        { icon: 'pie', name: 'Server', page: {} },
+        { icon: 'pie', name: 'Client', page: {} },
+      ]
+    },
+    {
+      name: 'Configurtion',
+      menu: [
+        { icon: 'settings', name: 'App Settings', page: {} },
+      ]
+    },
+
+  ];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsPage');
+  }
+
+  clickMenu(item) {
+    console.log("clickMenu", item);
   }
 
 }
