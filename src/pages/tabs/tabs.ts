@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { WeatherPage } from '../weather/weather/weather';
+import { AwsPage } from '../aws/aws';
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 
@@ -10,8 +11,9 @@ import { ContactPage } from '../contact/contact';
 export class TabsPage {
 
   tab1Root = WeatherPage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+  tab2Root = AwsPage;
+  tab3Root = AboutPage;
+  tab4Root = ContactPage;
 
   constructor() {
 

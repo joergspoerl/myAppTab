@@ -13,6 +13,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { WeatherPage } from '../pages/weather/weather/weather';
 import { wSettingsPage } from '../pages/weather/wSettings/wSettings';
 
+import { AwsPage } from '../pages/aws/aws';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WeatherProvider } from '../pages/weather/providers/weather/weather';
@@ -24,6 +26,7 @@ import { WeatherProvider } from '../pages/weather/providers/weather/weather';
     ContactPage,
     WeatherPage,
     wSettingsPage,
+    AwsPage,
     TabsPage
     ],
   imports: [
@@ -40,6 +43,7 @@ import { WeatherProvider } from '../pages/weather/providers/weather/weather';
     ContactPage,
     WeatherPage,
     wSettingsPage,
+    AwsPage,
     TabsPage
   ],
   providers: [

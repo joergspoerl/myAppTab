@@ -32,13 +32,10 @@ export class wSettingsPage {
   }
 
   ionViewDidLoad() {
-
     console.log('ionViewDidLoad SettingsPage');
-
   }
 
   save(form) {
-
     this.weatherProvider.setLocation(this.location);
     this.navCtrl.pop();
   }
