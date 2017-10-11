@@ -26,12 +26,9 @@ export class AwsLogPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsLogPage');
-    this.awsMobileProvider.getToken();
-    this.awsRequestLog = this.awsMobileProvider.awsRequestLog;
+    //this.awsMobileProvider.getToken();
+    //this.awsRequestLog = this.awsMobileProvider.awsRequestLog;
 
-    setTimeout( () => {
-      console.log("timer !!!");
-      this.awsRequestLog = this.awsMobileProvider.awsRequestLog;
-    }, 10000);
+    this.awsMobileProvider.getRequestLog2().subscribe( response => this.awsRequestLog = response.json() as AwsRequestLogEntry[])
   }
 }

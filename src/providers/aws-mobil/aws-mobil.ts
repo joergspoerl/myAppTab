@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/mergeMap';
 
 /*
   Generated class for the AwsMobilProvider provider.
@@ -16,9 +17,9 @@ export class AwsMobilProvider {
   tokenUrl: string = 'token?SystemID=1';
   usr: string = 'Mobile';
   pwd: string = '!mobileCheck!';
-  token:Token;
+  token: Token;
 
-  awsRequestLog:AwsRequestLogEntry[];
+  awsRequestLog: AwsRequestLogEntry[];
 
   constructor(public http: Http) {
     console.log('Hello AwsMobilProvider Provider');
@@ -26,62 +27,82 @@ export class AwsMobilProvider {
 
   getToken() {
     console.log('getToken Start !');
-    
+
     let body = 'username=' + this.usr + '&password=' + this.pwd + '&grant_type=password';
-    let headers: Headers = new Headers ({ 'Content-Type': ['application/x-www-form-urlencoded', 'application/json']});
-    
-    this.http.post(this.baseUrl + this.tokenUrl, body, {headers: headers} )
+    let headers: Headers = new Headers({ 'Content-Type': ['application/x-www-form-urlencoded', 'application/json'] });
+
+    this.http.post(this.baseUrl + this.tokenUrl, body, { headers: headers })
       .toPromise()
       .then(
-        response  => { 
-          this.token = response.json() as Token;
-          console.log("getToken -> Response: ", this.token);
-          this.getRequestLog();
-        },
-        error => console.log("Response ERROR: " , error
-    ));
+      response => {
+        this.token = response.json() as Token;
+        console.log("getToken -> Response: ", this.token);
+        this.getRequestLog();
+      },
+      error => console.log("Response ERROR: ", error
+      ));
   }
+
+  getToken2() {
+    console.log('getToken Start !');
+
+    let body = 'username=' + this.usr + '&password=' + this.pwd + '&grant_type=password';
+    let headers: Headers = new Headers({ 'Content-Type': ['application/x-www-form-urlencoded', 'application/json'] });
+
+    return this.http.post(this.baseUrl + this.tokenUrl, body, { headers: headers })
+  }
+
+  getRequestLog2() {
+
+    console.log("getRequestLog2", this.token);
+    
+    if (!this.token) {
+      console.log("after if", this.token);
+      return this.getToken2()
+        .mergeMap(res => {
+          console.log("after flatMap", this.token);
+          this.token = res.json() as Token;
+          return this.getRequestLog();
+        })
+    } else {
+      return this.getRequestLog();
+    }
+  }
+
 
   getRequestLog() {
-    let headers: Headers = new Headers (
-      { 'Content-Type': ['application/x-www-form-urlencoded', 'application/json'],
-      'Authorization': 'bearer ' + this.token.access_token
+
+    let headers: Headers = new Headers(
+      {
+        'Content-Type': ['application/x-www-form-urlencoded', 'application/json'],
+        'Authorization': 'bearer ' + this.token.access_token
       });
 
-    this.http.get (this.baseUrl + 'AwsMobileApi/GetRequestLog', { headers: headers})
-    .toPromise()
-    .then(
-      response => {
-        console.log(response);
-        this.awsRequestLog = response.json() as AwsRequestLogEntry[];
-      },
-      error => {
-        console.log(error);
-      }
-    )  
+
+    return this.http.get(this.baseUrl + 'AwsMobileApi/GetRequestLog', { headers: headers })
 
   }
 
 
-  }
+}
 
-export class Token {
+export interface Token {
   access_token: string;
   token_type: string;
   expires_in: number;
 }
 
-export class AwsRequestLogEntry {
-  
-    "AWS_LOG_ID": number;
-    "AWS_SESSION": string;
-    "AWS_LOG_DATE": string;
-    "AWS_LOG_RET_CODE": number;
-    "AWS_LOG_SYS_ID": number;
-    "AWS_LOG_REQ_ID": number;
-    "AWS_LOG_CLIENT": string;
-    "AWS_LOG_USER_ID": string;
-    "REQ_NAME": string;
-    "SYS_NAME": string;
-    "COLOR": string;
+export interface AwsRequestLogEntry {
+
+  "AWS_LOG_ID": number;
+  "AWS_SESSION": string;
+  "AWS_LOG_DATE": string;
+  "AWS_LOG_RET_CODE": number;
+  "AWS_LOG_SYS_ID": number;
+  "AWS_LOG_REQ_ID": number;
+  "AWS_LOG_CLIENT": string;
+  "AWS_LOG_USER_ID": string;
+  "REQ_NAME": string;
+  "SYS_NAME": string;
+  "COLOR": string;
 }
