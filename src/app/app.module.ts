@@ -15,6 +15,7 @@ import { wSettingsPage } from '../pages/weather/wSettings/wSettings';
 
 import { AwsPage } from '../pages/aws/aws';
 import { AwsLogPage } from '../pages/aws/aws-log/aws-log';
+import { AwsLogDetailsPage } from '../pages/aws/aws-log/aws-log-details/aws-log-details';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -30,6 +31,7 @@ import { AwsMobilProvider } from '../providers/aws-mobil/aws-mobil';
     wSettingsPage,
     AwsPage,
     AwsLogPage,
+    AwsLogDetailsPage,
     TabsPage
     ],
   imports: [
@@ -48,6 +50,7 @@ import { AwsMobilProvider } from '../providers/aws-mobil/aws-mobil';
     wSettingsPage,
     AwsPage,
     AwsLogPage,
+    AwsLogDetailsPage,
     TabsPage
   ],
   providers: [

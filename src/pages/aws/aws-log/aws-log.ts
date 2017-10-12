@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AwsMobilProvider, AwsRequestLogEntry } from '../../../providers/aws-mobil/aws-mobil'
+import { AwsLogDetailsPage } from './aws-log-details/aws-log-details';
+
 /**
  * Generated class for the AwsLogPage page.
  *
@@ -15,10 +17,10 @@ import { AwsMobilProvider, AwsRequestLogEntry } from '../../../providers/aws-mob
 })
 export class AwsLogPage {
 
-  awsRequestLog:AwsRequestLogEntry[];
+  awsRequestLog: AwsRequestLogEntry[];
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private awsMobileProvider: AwsMobilProvider
   ) {
@@ -26,9 +28,11 @@ export class AwsLogPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsLogPage');
-    //this.awsMobileProvider.getToken();
-    //this.awsRequestLog = this.awsMobileProvider.awsRequestLog;
+    this.awsMobileProvider.getRequestLogWithAuth()
+      .subscribe(response => this.awsRequestLog = response.json() as AwsRequestLogEntry[])
+  }
 
-    this.awsMobileProvider.getRequestLogWithAuth().subscribe( response => this.awsRequestLog = response.json() as AwsRequestLogEntry[])
+  gotoAwsLogDetails(item) {
+    this.navCtrl.push(AwsLogDetailsPage, { 'item' : item });
   }
 }

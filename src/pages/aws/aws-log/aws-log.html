@@ -7,28 +7,29 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>awsLog</ion-title>
+    <ion-title>AWS Log</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <ion-list>
-    <ion-item *ngFor="let item of awsRequestLog" [ngStyle]="{'background-color': item.COLOR}">
+    <button ion-item *ngFor="let item of awsRequestLog" 
+    [ngStyle]="{'background-color': item.COLOR}"
+    (click)="gotoAwsLogDetails(item)">
       <h1 item-start>
         <ion-icon name="ios-information-circle" item-start></ion-icon>
       </h1>
-      <h2>{{item.AWS_LOG_DATE}}</h2>
+      <h2 class="subText">{{item.AWS_LOG_DATE}}</h2>
       <h1>{{item.REQ_NAME}}</h1>
       <div class="row">
-        <div class="col">{{item.AWS_LOG_REQ_ID}}</div>
-        <div class="col">{{item.AWS_LOG_RET_CODE}}</div>
-        <div class="col">{{item.AWS_LOG_CLIENT}}</div>
-        <div class="col">{{item.AWS_LOG_USER_ID}}</div>
+        <div class="col subText">{{item.AWS_LOG_REQ_ID}}</div>
+        <div class="col subText">{{item.AWS_LOG_RET_CODE}}</div>
+        <div class="col subText">{{item.AWS_LOG_CLIENT}}</div>
+        <div class="col subText">{{item.AWS_LOG_USER_ID}}</div>
       </div>
-      <!-- 
-        <div item-end>{{item.SYS_NAME}}</div> -->
-    </ion-item>
+      <ion-icon name="arrow-forward" item-end></ion-icon>
+    </button>
   </ion-list>
 </ion-content>
