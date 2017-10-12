@@ -25,25 +25,8 @@ export class AwsMobilProvider {
     console.log('Hello AwsMobilProvider Provider');
   }
 
+ 
   getToken() {
-    console.log('getToken Start !');
-
-    let body = 'username=' + this.usr + '&password=' + this.pwd + '&grant_type=password';
-    let headers: Headers = new Headers({ 'Content-Type': ['application/x-www-form-urlencoded', 'application/json'] });
-
-    this.http.post(this.baseUrl + this.tokenUrl, body, { headers: headers })
-      .toPromise()
-      .then(
-      response => {
-        this.token = response.json() as Token;
-        console.log("getToken -> Response: ", this.token);
-        this.getRequestLog();
-      },
-      error => console.log("Response ERROR: ", error
-      ));
-  }
-
-  getToken2() {
     console.log('getToken Start !');
 
     let body = 'username=' + this.usr + '&password=' + this.pwd + '&grant_type=password';
@@ -52,15 +35,11 @@ export class AwsMobilProvider {
     return this.http.post(this.baseUrl + this.tokenUrl, body, { headers: headers })
   }
 
-  getRequestLog2() {
+  getRequestLogWithAuth() {
 
-    console.log("getRequestLog2", this.token);
-    
     if (!this.token) {
-      console.log("after if", this.token);
-      return this.getToken2()
+      return this.getToken()
         .mergeMap(res => {
-          console.log("after flatMap", this.token);
           this.token = res.json() as Token;
           return this.getRequestLog();
         })
@@ -77,7 +56,6 @@ export class AwsMobilProvider {
         'Content-Type': ['application/x-www-form-urlencoded', 'application/json'],
         'Authorization': 'bearer ' + this.token.access_token
       });
-
 
     return this.http.get(this.baseUrl + 'AwsMobileApi/GetRequestLog', { headers: headers })
 

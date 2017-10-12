@@ -29,6 +29,6 @@ export class AwsLogPage {
     //this.awsMobileProvider.getToken();
     //this.awsRequestLog = this.awsMobileProvider.awsRequestLog;
 
-    this.awsMobileProvider.getRequestLog2().subscribe( response => this.awsRequestLog = response.json() as AwsRequestLogEntry[])
+    this.awsMobileProvider.getRequestLogWithAuth().subscribe( response => this.awsRequestLog = response.json() as AwsRequestLogEntry[])
   }
 }
