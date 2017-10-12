@@ -14,10 +14,21 @@
 
 
 <ion-content padding>
-    <ion-list>
-      <ion-item *ngFor="let item of awsRequestLog" [ngStyle]="{'background-color': item.COLOR}">
-        <div item-start>{{item.AWS_LOG_ID}}</div>
-        <div item-end>{{item.SYS_NAME}}</div>
-      </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let item of awsRequestLog" [ngStyle]="{'background-color': item.COLOR}">
+      <h1 item-start>
+        <ion-icon name="ios-information-circle" item-start></ion-icon>
+      </h1>
+      <h2>{{item.AWS_LOG_DATE}}</h2>
+      <h1>{{item.REQ_NAME}}</h1>
+      <div class="row">
+        <div class="col">{{item.AWS_LOG_REQ_ID}}</div>
+        <div class="col">{{item.AWS_LOG_RET_CODE}}</div>
+        <div class="col">{{item.AWS_LOG_CLIENT}}</div>
+        <div class="col">{{item.AWS_LOG_USER_ID}}</div>
+      </div>
+      <!-- 
+        <div item-end>{{item.SYS_NAME}}</div> -->
+    </ion-item>
+  </ion-list>
 </ion-content>
