@@ -29,6 +29,7 @@ export class AwsLoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsLoginPage');
+    
     this.awsAuthProvider.getCredentials()
       .then(credentials => {
         this.credentials = credentials as Credentials
