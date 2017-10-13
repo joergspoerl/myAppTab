@@ -51,26 +51,27 @@ export class AwsAuthProvider {
 
 
   getToken() {
-    console.log('getToken Start !');
+    console.log('getToken Start !', this.token);
 
     return new Promise((resolve, reject) => {
       
       if(this.token) {
-        resolve(this.token);
+        return resolve(this.token);
       }
-      
+
       this.getCredentials().then(result => {
         this.credentials = result as Credentials;
   
         let body = 'username=' + this.credentials.username
           + '&password=' + this.credentials.password + '&grant_type=password';
         let headers: Headers = new Headers({ 'Content-Type': ['application/x-www-form-urlencoded', 'application/json'] });
-  
+
+        //get token
         this.http.post(this.baseUrl + this.tokenUrl, body, { headers: headers })
           .subscribe(response => {
             this.token = response.json() as Token;
             console.log("getToken ->", this.token);
-            resolve(this.token);
+            return resolve(this.token);
           })
       });
 
