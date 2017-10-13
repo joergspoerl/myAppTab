@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AwsLogPage } from './aws-log/aws-log';
+import { AwsLoginPage } from './aws-login/aws-login';
+import { AwsAuthProvider } from '../../providers/aws-auth/aws-auth';
 
 /**
  * Generated class for the AwsPage page.
@@ -39,7 +41,10 @@ export class AwsPage {
 
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private awsAuthProvider: AwsAuthProvider) {
   }
 
   ionViewDidLoad() {
@@ -49,6 +54,18 @@ export class AwsPage {
   clickMenu(item) {
     console.log("clickMenu", item);
     this.navCtrl.push(item.page);    
+  }
+
+  showLogin() {
+    this.navCtrl.push(AwsLoginPage);
+  }
+
+  logout() {
+    this.awsAuthProvider.removeCredentials();
+  }
+  
+  test() {
+    this.awsAuthProvider.printTestToken();
   }
 
 }

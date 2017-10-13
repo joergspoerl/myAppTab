@@ -16,11 +16,13 @@ import { wSettingsPage } from '../pages/weather/wSettings/wSettings';
 import { AwsPage } from '../pages/aws/aws';
 import { AwsLogPage } from '../pages/aws/aws-log/aws-log';
 import { AwsLogDetailsPage } from '../pages/aws/aws-log/aws-log-details/aws-log-details';
+import { AwsLoginPage } from '../pages/aws/aws-login/aws-login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WeatherProvider } from '../pages/weather/providers/weather/weather';
 import { AwsMobilProvider } from '../providers/aws-mobil/aws-mobil';
+import { AwsAuthProvider } from '../providers/aws-auth/aws-auth';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { AwsMobilProvider } from '../providers/aws-mobil/aws-mobil';
     AwsPage,
     AwsLogPage,
     AwsLogDetailsPage,
+    AwsLoginPage,
     TabsPage
     ],
   imports: [
@@ -51,6 +54,7 @@ import { AwsMobilProvider } from '../providers/aws-mobil/aws-mobil';
     AwsPage,
     AwsLogPage,
     AwsLogDetailsPage,
+    AwsLoginPage,
     TabsPage
   ],
   providers: [
@@ -58,7 +62,8 @@ import { AwsMobilProvider } from '../providers/aws-mobil/aws-mobil';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     WeatherProvider,
-    AwsMobilProvider
+    AwsMobilProvider,
+    AwsAuthProvider
   ]
 })
 export class AppModule {}

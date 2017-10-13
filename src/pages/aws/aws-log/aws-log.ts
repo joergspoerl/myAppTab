@@ -28,8 +28,11 @@ export class AwsLogPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsLogPage');
-    this.awsMobileProvider.getRequestLogWithAuth()
-      .subscribe(response => this.awsRequestLog = response.json() as AwsRequestLogEntry[])
+    this.awsMobileProvider.getRequestLog().then(response => {
+      
+      this.awsRequestLog = (response as Response).json() as AwsRequestLogEntry[];
+    })
+      
   }
 
   gotoAwsLogDetails(item) {
