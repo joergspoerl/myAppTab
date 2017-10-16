@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/mergeMap';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
 
 //import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -42,7 +42,7 @@ export class AwsMobilProvider {
     //public navCtrl: NavController, 
     //public navParams: NavParams,
     private AuthProvider: AuthProvider
-    ) {
+  ) {
     console.log('Hello AwsMobilProvider Provider');
   }
 
@@ -65,7 +65,7 @@ export class AwsMobilProvider {
   //   // }))
   // }
 
- 
+
 
   // getRequestLogWithAuth() {
 
@@ -97,20 +97,33 @@ export class AwsMobilProvider {
 
 
   getRequestLog2() {
-    
-        return new Promise((resolve, reject) => {
-    
-          this.AuthProvider.getToken().then(result => {
-    
-            this.httpClient.get(
-              this.baseUrl + 'AwsMobileApi/GetRequestLog')
-              .toPromise()
-              .then(response => resolve(response))
-              .catch(error => reject(error))
-          })
-        });
-      }
-    
+
+    return new Promise((resolve, reject) => {
+
+      this.AuthProvider.getToken().then(result => {
+
+        this.httpClient.get(
+          this.baseUrl + 'AwsMobileApi/GetRequestLog')
+          .toPromise()
+          .then(response => resolve(response))
+          .catch(error => reject(error))
+      })
+    });
+  }
+
+
+
+  getRequestLog3() {
+
+    return this.httpClient.get(
+      this.baseUrl + 'AwsMobileApi/GetRequestLog')
+  }
+
+  getServerCount() {
+    return this.httpClient.get(
+      this.baseUrl + 'AwsMobileApi/GetServerCount')
+  }
+
 
 }
 

@@ -44,11 +44,19 @@ export class AwsPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private AuthProvider: AuthProvider) {
+    private authProvider: AuthProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsPage');
+
+    // Login
+    this.authProvider.getToken()
+    .then(
+      result => {})
+    .catch(
+      error  => {});
+      
   }
 
   clickMenu(item) {

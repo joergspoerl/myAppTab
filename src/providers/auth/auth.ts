@@ -126,12 +126,13 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
-  
+
   constructor(public authProvider: AuthProvider) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
 
-    this.makeAuth();
+
+    console.log("HttpHandler: ", next);
     const newRequest = req.clone({
       headers: req.headers.set(
         'Authorization',
@@ -140,17 +141,6 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     });
     console.log("Interceptor inject TOKEN ", newRequest, next);
     return next.handle(newRequest);
-  }
-
-  makeAuth () {
-    this.authProvider.getToken()
-    .then(resolve => {
-      console.log("OK");
-    })
-    .catch(error => {
-      console.log("ERROR");
-    })
-
   }
 }
 

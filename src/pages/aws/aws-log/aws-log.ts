@@ -32,7 +32,7 @@ export class AwsLogPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsLogPage');    
-    this.loadLog();  
+    this.loadLog3();  
   }
 
   loadLog() {
@@ -46,7 +46,18 @@ export class AwsLogPage {
       this.dissmissLoading();
       console.log("Error: ", error);
     })
+  }
 
+  loadLog3() {
+    this.presentLoading();
+    this.awsMobileProvider.getRequestLog3().subscribe(
+      result => {
+        this.dissmissLoading();
+        this.awsRequestLog = result as AwsRequestLogEntry[];
+        },
+      error => {
+        this.dissmissLoading();
+      })
   }
 
   gotoAwsLogDetails(item) {
