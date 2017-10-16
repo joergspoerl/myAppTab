@@ -14,6 +14,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { WeatherPage } from '../pages/weather/weather/weather';
 import { wSettingsPage } from '../pages/weather/wSettings/wSettings';
 
+import { ChartPage } from '../pages/chart/chart';
+
 import { AwsPage } from '../pages/aws/aws';
 import { AwsLogPage } from '../pages/aws/aws-log/aws-log';
 import { AwsLogDetailsPage } from '../pages/aws/aws-log/aws-log-details/aws-log-details';
@@ -36,6 +38,7 @@ import { AuthProvider } from '../providers/auth/auth';
     ContactPage,
     WeatherPage,
     wSettingsPage,
+    ChartPage,
     AwsPage,
     AwsLogPage,
     AwsLogDetailsPage,
@@ -57,6 +60,7 @@ import { AuthProvider } from '../providers/auth/auth';
     ContactPage,
     WeatherPage,
     wSettingsPage,
+    ChartPage,
     AwsPage,
     AwsLogPage,
     AwsLogDetailsPage,
