@@ -1,32 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Storage } from '@ionic/storage';
+import { Http, Headers } from '@angular/http'; // Http - angular < 4.3
 import 'rxjs/add/operator/map';
-import { Storage } from '@ionic/storage'
 
 /*
-  Generated class for the AwsAuthProvider provider.
+  Generated class for the AuthProvider provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
 @Injectable()
-export class AwsAuthProvider {
+export class AuthProvider {
 
   baseUrl: string = 'https://aws.emilfrey.net/AwsMobile/';
   tokenUrl: string = 'token?SystemID=1';
   token: Token;
 
+  headers_prefix: string = 'bearer ';
+
   credentials: Credentials = new Credentials();
-  AwsCredentialsStoreKey: string = "AWS-Credentials";
+  credentialsStoreKey: string = "AWS-Credentials";
 
-  constructor(public http: Http, private storage: Storage) {
-    console.log('Hello AwsAuthProvider Provider');
-
+  constructor(
+    public http: Http,
+    private storage: Storage) {
+    console.log('Hello AuthProvider Provider');
   }
 
   getCredentials() {
     return new Promise((resolve, reject) => {
-      this.storage.get(this.AwsCredentialsStoreKey).then((val => {
+      this.storage.get(this.credentialsStoreKey).then((val => {
         if (val != null) {
           this.credentials = JSON.parse(val);
         } else {
@@ -39,13 +42,13 @@ export class AwsAuthProvider {
 
   setCredentials(newCredentials: Credentials) {
     this.credentials = newCredentials;
-    this.storage.set(this.AwsCredentialsStoreKey, JSON.stringify(this.credentials))
+    this.storage.set(this.credentialsStoreKey, JSON.stringify(this.credentials))
     console.log("setCredentials()", this.credentials);
   }
 
   removeCredentials() {
     this.credentials = new Credentials();
-    this.storage.remove(this.AwsCredentialsStoreKey)
+    this.storage.remove(this.credentialsStoreKey)
     console.log("removeCredentials()", this.credentials);
   }
 
@@ -54,15 +57,17 @@ export class AwsAuthProvider {
     console.log('getToken Start !', this.token);
 
     return new Promise((resolve, reject) => {
-      
+
       // if token exist, use this
-      if(this.token) {
+      if (this.token) {
+        console.log("use saved token !")
         return resolve(this.token);
       }
 
+      // user & password from Storage
       this.getCredentials().then(result => {
         this.credentials = result as Credentials;
-  
+
         // prepair request
         let body = 'username=' + this.credentials.username
           + '&password=' + this.credentials.password + '&grant_type=password';
@@ -95,8 +100,68 @@ export class AwsAuthProvider {
       });
     return headers;
   }
+
+
 }
 
+
+
+
+
+
+/************************************************************************************ 
+ * 
+ *  AuthHttpInterceptor
+ * 
+ ************************************************************************************/
+
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor
+} from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+
+
+@Injectable()
+export class AuthHttpInterceptor implements HttpInterceptor {
+  
+  constructor(public authProvider: AuthProvider) { }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+
+    this.makeAuth();
+    const newRequest = req.clone({
+      headers: req.headers.set(
+        'Authorization',
+        this.authProvider.headers_prefix + this.authProvider.token.access_token
+      )
+    });
+    console.log("Interceptor inject TOKEN ", newRequest, next);
+    return next.handle(newRequest);
+  }
+
+  makeAuth () {
+    this.authProvider.getToken()
+    .then(resolve => {
+      console.log("OK");
+    })
+    .catch(error => {
+      console.log("ERROR");
+    })
+
+  }
+}
+
+
+
+
+/************************************************************************************ 
+ * 
+ *  Types
+ * 
+ ************************************************************************************/
 
 export class Credentials {
   username: string;
@@ -115,3 +180,4 @@ export interface Token {
   token_type: string;
   expires_in: number;
 }
+

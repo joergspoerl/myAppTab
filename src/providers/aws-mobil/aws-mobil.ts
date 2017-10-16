@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers } from '@angular/http/';
+import { HttpClient } from '@angular/common/http';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/mergeMap';
@@ -10,8 +12,8 @@ import {Observable} from 'rxjs/Observable';
 
 import { Storage } from '@ionic/storage'
 import { AwsLoginPage } from '../../pages/aws/aws-login/aws-login';
-import { AwsAuthProvider } from '../aws-auth/aws-auth';
-import { Credentials } from '../aws-auth/aws-auth';
+import { AuthProvider } from '../auth/auth';
+import { Credentials } from '../auth/auth';
 
 /*
   Generated class for the AwsMobilProvider provider.
@@ -35,9 +37,11 @@ export class AwsMobilProvider {
 
   constructor(
     public http: Http,
+    private httpClient: HttpClient,
+
     //public navCtrl: NavController, 
     //public navParams: NavParams,
-    private awsAuthProvider: AwsAuthProvider
+    private AuthProvider: AuthProvider
     ) {
     console.log('Hello AwsMobilProvider Provider');
   }
@@ -45,10 +49,10 @@ export class AwsMobilProvider {
   // getCredentials() {
 
   //   return new Promise((resolve, reject) => {
-  //     this.awsAuthProvider.getCredentials().then()
+  //     this.AuthProvider.getCredentials().then()
   //   })
 
-  //   // this.awsAuthProvider.getCredentials().then((credentials => {
+  //   // this.AuthProvider.getCredentials().then((credentials => {
   //   //   if ((credentials as Credentials).username != '') {
   //   //     this.credentials = credentials as Credentials;
   //   //   } else {
@@ -81,20 +85,32 @@ export class AwsMobilProvider {
 
     return new Promise((resolve, reject) => {
 
-      this.awsAuthProvider.getToken().then(result => {
+      this.AuthProvider.getToken().then(result => {
 
         this.http.get(
-          this.baseUrl + 'AwsMobileApi/GetRequestLog', { headers: this.awsAuthProvider.getAuthHeaders() })
+          this.baseUrl + 'AwsMobileApi/GetRequestLog', { headers: this.AuthProvider.getAuthHeaders() })
           .toPromise()
           .then(response => resolve(response))
-  
       })
-  
-
     });
-
   }
 
+
+  getRequestLog2() {
+    
+        return new Promise((resolve, reject) => {
+    
+          this.AuthProvider.getToken().then(result => {
+    
+            this.httpClient.get(
+              this.baseUrl + 'AwsMobileApi/GetRequestLog')
+              .toPromise()
+              .then(response => resolve(response))
+              .catch(error => reject(error))
+          })
+        });
+      }
+    
 
 }
 

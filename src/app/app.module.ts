@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http' //new
 import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
 
@@ -21,8 +22,12 @@ import { AwsLoginPage } from '../pages/aws/aws-login/aws-login';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WeatherProvider } from '../pages/weather/providers/weather/weather';
+
 import { AwsMobilProvider } from '../providers/aws-mobil/aws-mobil';
-import { AwsAuthProvider } from '../providers/aws-auth/aws-auth';
+
+import { AuthHttpInterceptor } from '../providers/auth/auth';
+import { HTTP_INTERCEPTORS } from '@angular/common/http'
+import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
   declarations: [
@@ -40,6 +45,7 @@ import { AwsAuthProvider } from '../providers/aws-auth/aws-auth';
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     FormsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
@@ -63,7 +69,9 @@ import { AwsAuthProvider } from '../providers/aws-auth/aws-auth';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     WeatherProvider,
     AwsMobilProvider,
-    AwsAuthProvider
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true},
+    AuthProvider,
+    AuthProvider
   ]
 })
 export class AppModule {}

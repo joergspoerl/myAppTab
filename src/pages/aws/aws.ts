@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AwsLogPage } from './aws-log/aws-log';
 import { AwsLoginPage } from './aws-login/aws-login';
-import { AwsAuthProvider } from '../../providers/aws-auth/aws-auth';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the AwsPage page.
@@ -44,7 +44,7 @@ export class AwsPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private awsAuthProvider: AwsAuthProvider) {
+    private AuthProvider: AuthProvider) {
   }
 
   ionViewDidLoad() {
@@ -61,11 +61,11 @@ export class AwsPage {
   }
 
   logout() {
-    this.awsAuthProvider.removeCredentials();
+    this.AuthProvider.removeCredentials();
   }
   
   test() {
-    this.awsAuthProvider.printTestToken();
+    this.AuthProvider.printTestToken();
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AwsAuthProvider } from '../../../providers/aws-auth/aws-auth';
-import { Credentials } from '../../../providers/aws-auth/aws-auth';
+import { AuthProvider } from '../../../providers/auth/auth';
+import { Credentials } from '../../../providers/auth/auth';
 
 /**
  * Generated class for the AwsLoginPage page.
@@ -23,24 +23,29 @@ export class AwsLoginPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private awsAuthProvider: AwsAuthProvider
+    private AuthProvider: AuthProvider
   ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsLoginPage');
-    
-    this.awsAuthProvider.getCredentials()
+
+    this.AuthProvider.getCredentials()
       .then(credentials => {
         this.credentials = credentials as Credentials
         console.log(this.credentials);
-      });
+      })
+      .catch(error => {
+        console.log("Error: ", error);
+      })
+  
   }
 
   login() {
-    this.awsAuthProvider.setCredentials(this.credentials);
+    this.AuthProvider.setCredentials(this.credentials);
     this.navCtrl.pop();
   }
 
+  
 
 }

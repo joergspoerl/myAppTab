@@ -37,9 +37,14 @@ export class AwsLogPage {
 
   loadLog() {
     this.presentLoading();
-    this.awsMobileProvider.getRequestLog().then(response => {
+    this.awsMobileProvider.getRequestLog2()
+    .then(response => {
       this.dissmissLoading();
-      this.awsRequestLog = (response as Response).json() as AwsRequestLogEntry[];
+      this.awsRequestLog = response as AwsRequestLogEntry[];
+    })
+    .catch(error => {
+      this.dissmissLoading();
+      console.log("Error: ", error);
     })
 
   }
