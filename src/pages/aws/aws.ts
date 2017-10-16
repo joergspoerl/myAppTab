@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AwsLogPage } from './aws-log/aws-log';
 import { AwsLoginPage } from './aws-login/aws-login';
 import { AuthProvider } from '../../providers/auth/auth';
-
+import { AwsMobilProvider } from '../../providers/aws-mobil/aws-mobil';
+import { ChartPage } from '../chart/chart'
 /**
  * Generated class for the AwsPage page.
  *
@@ -22,20 +23,20 @@ export class AwsPage {
     {
       name: 'Log Files',
       menu: [
-        { icon: 'list', name: 'Requests', page: AwsLogPage }
+        { icon: 'list', name: 'Requests', page: AwsLogPage, param: {}}
       ]
     },
     {
       name: 'Diagram',
       menu: [
-        { icon: 'pie', name: 'Server', page: {} },
-        { icon: 'pie', name: 'Client', page: {} },
+        { icon: 'pie', name: 'Server', page: ChartPage , param: this.awsMobileProvider.getServerCount()},
+        { icon: 'pie', name: 'Client', page: ChartPage , param: this.awsMobileProvider.getClientsCount()},
       ]
     },
     {
       name: 'Configurtion',
       menu: [
-        { icon: 'settings', name: 'App Settings', page: {} },
+        { icon: 'settings', name: 'App Settings', page: {},  param: {} },
       ]
     },
 
@@ -44,7 +45,8 @@ export class AwsPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private authProvider: AuthProvider) {
+    private authProvider: AuthProvider,
+    public awsMobileProvider: AwsMobilProvider) {
   }
 
   ionViewDidLoad() {
@@ -61,7 +63,7 @@ export class AwsPage {
 
   clickMenu(item) {
     console.log("clickMenu", item);
-    this.navCtrl.push(item.page);    
+    this.navCtrl.push(item.page, { 'func' : item.param });    
   }
 
   showLogin() {
@@ -69,11 +71,11 @@ export class AwsPage {
   }
 
   logout() {
-    this.AuthProvider.removeCredentials();
+    this.authProvider.removeCredentials();
   }
   
   test() {
-    this.AuthProvider.printTestToken();
+    this.authProvider.printTestToken();
   }
 
 }

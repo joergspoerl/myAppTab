@@ -28,11 +28,17 @@ export class ChartPage {
     barChart: any;
     doughnutChart: any;
     lineChart: any;
+    func: any;
  
     constructor(
         public navCtrl: NavController,
-        private awsMobileProvider: AwsMobilProvider) {
- 
+        private awsMobileProvider: AwsMobilProvider,
+        private navParams: NavParams) {
+        
+        this.func = navParams.get('func');
+
+        console.log("this.func", this.func)
+            
     }
  
     ionViewDidLoad() {
@@ -80,7 +86,7 @@ export class ChartPage {
  
             type: 'doughnut',
             data: {
-                labels: ["Red", "Blue"],
+                labels: [],
                 datasets: [{
                     label: '# of Votes',
                     data: [],
@@ -143,7 +149,7 @@ export class ChartPage {
     }
 
     load() {
-        this.awsMobileProvider.getServerCount().subscribe(result => {
+        this.func.subscribe(result => {
             
             this.doughnutChart.data.datasets[0].data.push(result[0].data) ;
             this.doughnutChart.data.datasets[0].data.push(result[1].data) ;

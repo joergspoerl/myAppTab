@@ -124,6 +124,11 @@ export class AwsMobilProvider {
       this.baseUrl + 'AwsMobileApi/GetServerCount')
   }
 
+  getClientsCount() {
+    return this.httpClient.get(
+      this.baseUrl + 'AwsMobileApi/GetClientsCount')
+  }
+
 
 }
 

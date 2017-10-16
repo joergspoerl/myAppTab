@@ -16,10 +16,10 @@
 <ion-content padding>
   <ion-list>
 
-    <button ion-button block (click)="showLogin()"><ion-icon name="person">Login</ion-icon></button>
-    <button ion-button block (click)="logout()"><ion-icon name="leave">Logout</ion-icon></button>
-    <button ion-button block (click)="test()"><ion-icon name="test">test</ion-icon></button>
-    
+    <button ion-button block (click)="showLogin()"><ion-icon name="person">Store Login</ion-icon></button>
+    <button ion-button block (click)="logout()"><ion-icon name="leave">Clear Login</ion-icon></button>
+    <!-- <button ion-button block (click)="test()"><ion-icon name="test">test</ion-icon></button>
+     -->
     <ng-template ngFor let-divider [ngForOf]="awsMenu">
       <ion-item-divider color="light">
         {{divider.name}}
