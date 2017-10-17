@@ -48,26 +48,13 @@ export class AwsMobilProvider {
 
   
 
-  getRequestLog() {
-
-    return new Promise((resolve, reject) => {
-
-      this.AuthProvider.getToken().then(result => {
-
-        this.http.get(
-          this.baseUrl + 'AwsMobileApi/GetRequestLog', { headers: this.AuthProvider.getAuthHeaders() })
-          .toPromise()
-          .then(response => resolve(response))
-      })
-    });
-  }
 
 
   getRequestLog2() {
 
     return new Promise((resolve, reject) => {
 
-      this.AuthProvider.getToken().then(result => {
+      this.AuthProvider.login().then(result => {
 
         this.httpClient.get(
           this.baseUrl + 'AwsMobileApi/GetRequestLog')

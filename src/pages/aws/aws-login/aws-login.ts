@@ -18,7 +18,7 @@ import { Credentials } from '../../../providers/auth/auth';
 export class AwsLoginPage {
 
 
-  credentials: Credentials = { username: '', password: ''};
+  credentials: Credentials = new Credentials();
   remember: boolean;
 
   constructor(
