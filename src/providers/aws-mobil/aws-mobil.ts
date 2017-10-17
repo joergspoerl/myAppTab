@@ -46,40 +46,7 @@ export class AwsMobilProvider {
     console.log('Hello AwsMobilProvider Provider');
   }
 
-  // getCredentials() {
-
-  //   return new Promise((resolve, reject) => {
-  //     this.AuthProvider.getCredentials().then()
-  //   })
-
-  //   // this.AuthProvider.getCredentials().then((credentials => {
-  //   //   if ((credentials as Credentials).username != '') {
-  //   //     this.credentials = credentials as Credentials;
-  //   //   } else {
-  //   //     this.credentials = {
-  //   //       username: '!!!',
-  //   //       password: '!!!'
-  //   //     };
-  //   //     //this.navCtrl.push(AwsLoginPage);
-  //   //   }
-  //   // }))
-  // }
-
-
-
-  // getRequestLogWithAuth() {
-
-  //   if (!this.token) {
-  //     return this.getToken()
-  //       .mergeMap(res => {
-  //         this.token = res.json() as Token;
-  //         return this.getRequestLog();
-  //       })
-  //   } else {
-  //     return this.getRequestLog();
-  //   }
-  // }
-
+  
 
   getRequestLog() {
 
