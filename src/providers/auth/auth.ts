@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Http, Headers } from '@angular/http'; // Http - angular < 4.3
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 /*
   Generated class for the AuthProvider provider.
@@ -75,12 +76,17 @@ export class AuthProvider {
 
         //get token from server
         this.http.post(this.baseUrl + this.tokenUrl, body, { headers: headers })
-          .subscribe(response => {
+          .subscribe(
+            response => {
             this.token = response.json() as Token;
             console.log("getToken ->", this.token);
             return resolve(this.token);
-          })  
-      });
+            },
+            error => {
+              return reject(error);
+            }
+          ) 
+    });
 
     })
   }

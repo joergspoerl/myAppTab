@@ -16,8 +16,13 @@
 <ion-content padding>
   <ion-list>
 
-    <button ion-button block (click)="showLogin()"><ion-icon name="person">Store Login</ion-icon></button>
-    <button ion-button block (click)="logout()"><ion-icon name="leave">Clear Login</ion-icon></button>
+    <button ion-button block (click)="showLogin()" *ngIf="!authProvider.token">
+      <ion-icon name="person">Store Login</ion-icon>
+    </button>
+    
+    <button ion-button block (click)="logout()" *ngIf="authProvider.token">
+      <ion-icon name="leave">Clear Login</ion-icon>
+    </button>
 
     <ng-template ngFor let-divider [ngForOf]="awsMenu">
       <ion-item-divider color="light">

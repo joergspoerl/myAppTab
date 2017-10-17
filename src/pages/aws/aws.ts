@@ -85,6 +85,7 @@ export class AwsPage {
 
   logout() {
     this.authProvider.removeCredentials();
+    this.navCtrl.push(AwsLoginPage);
   }
   
 
