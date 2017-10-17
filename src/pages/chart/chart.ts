@@ -150,12 +150,11 @@ export class ChartPage {
 
     load() {
         this.func.subscribe(result => {
-            
-            this.doughnutChart.data.datasets[0].data.push(result[0].data) ;
-            this.doughnutChart.data.datasets[0].data.push(result[1].data) ;
 
-            this.doughnutChart.data.labels.push(result[0].labels) ;
-            this.doughnutChart.data.labels.push(result[1].labels) ;
+            result.forEach(element => {
+                this.doughnutChart.data.datasets[0].data.push(element.data) ;
+                this.doughnutChart.data.labels.push(element.labels) ;
+            });
             
             console.log(this.doughnutChart.data.datasets[0].data);
             this.doughnutChart.update();
