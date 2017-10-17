@@ -4,7 +4,10 @@ import { AwsLogPage } from './aws-log/aws-log';
 import { AwsLoginPage } from './aws-login/aws-login';
 import { AuthProvider } from '../../providers/auth/auth';
 import { AwsMobilProvider } from '../../providers/aws-mobil/aws-mobil';
-import { ChartPage } from '../chart/chart'
+import { ChartPage } from '../chart/chart';
+
+import { LoadingProvider } from '../../providers/loading/loading';
+
 /**
  * Generated class for the AwsPage page.
  *
@@ -18,7 +21,7 @@ import { ChartPage } from '../chart/chart'
   templateUrl: 'aws.html',
 })
 export class AwsPage {
-
+  
   awsMenu: any = [
     {
       name: 'Log Files',
@@ -46,18 +49,28 @@ export class AwsPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private authProvider: AuthProvider,
-    public awsMobileProvider: AwsMobilProvider) {
+    public awsMobileProvider: AwsMobilProvider,
+    public loadingProvider: LoadingProvider
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsPage');
 
     // Login
+    console.log("ionViewDidLoad" , this.loadingProvider);
+
+    this.loadingProvider.show();
     this.authProvider.getToken()
     .then(
-      result => {})
+      result => {
+        this.loadingProvider.hide();
+      })
     .catch(
-      error  => {});
+      error  => {
+        this.loadingProvider.hide();
+        this.showLogin();
+      });
       
   }
 
@@ -74,8 +87,6 @@ export class AwsPage {
     this.authProvider.removeCredentials();
   }
   
-  test() {
-    this.authProvider.printTestToken();
-  }
+
 
 }

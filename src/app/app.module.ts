@@ -30,6 +30,7 @@ import { AwsMobilProvider } from '../providers/aws-mobil/aws-mobil';
 import { AuthHttpInterceptor } from '../providers/auth/auth';
 import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthProvider } from '../providers/auth/auth';
+import { LoadingProvider } from '../providers/loading/loading';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { AuthProvider } from '../providers/auth/auth';
     AwsMobilProvider,
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true},
     AuthProvider,
-    AuthProvider
+    AuthProvider,
+    LoadingProvider
   ]
 })
 export class AppModule {}

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AwsMobilProvider, AwsRequestLogEntry } from '../../../providers/aws-mobil/aws-mobil'
 import { AwsLogDetailsPage } from './aws-log-details/aws-log-details';
-import { LoadingController } from 'ionic-angular';
-import { Loading } from 'ionic-angular';
 
 /**
  * Generated class for the AwsLogPage page.
@@ -20,13 +18,11 @@ import { Loading } from 'ionic-angular';
 export class AwsLogPage {
 
   awsRequestLog: AwsRequestLogEntry[];
-  loader: Loading;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private awsMobileProvider: AwsMobilProvider,
-    public loadingCtrl: LoadingController
   ) {
   }
 
@@ -36,27 +32,21 @@ export class AwsLogPage {
   }
 
   loadLog() {
-    this.presentLoading();
     this.awsMobileProvider.getRequestLog2()
     .then(response => {
-      this.dissmissLoading();
       this.awsRequestLog = response as AwsRequestLogEntry[];
     })
     .catch(error => {
-      this.dissmissLoading();
       console.log("Error: ", error);
     })
   }
 
   loadLog3() {
-    this.presentLoading();
     this.awsMobileProvider.getRequestLog3().subscribe(
       result => {
-        this.dissmissLoading();
         this.awsRequestLog = result as AwsRequestLogEntry[];
         },
       error => {
-        this.dissmissLoading();
       })
   }
 
@@ -64,16 +54,4 @@ export class AwsLogPage {
     this.navCtrl.push(AwsLogDetailsPage, { 'item' : item });
   }
 
-
-  presentLoading() {
-    this.loader = this.loadingCtrl.create({
-      content: "Please wait...",
-//      duration: 3000
-    });
-    this.loader.present();
-  }
-
-  dissmissLoading() {
-    this.loader.dismiss();
-  }
 }

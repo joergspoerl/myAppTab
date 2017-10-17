@@ -79,7 +79,7 @@ export class AuthProvider {
             this.token = response.json() as Token;
             console.log("getToken ->", this.token);
             return resolve(this.token);
-          })
+          })  
       });
 
     })
@@ -122,16 +122,22 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
+import { LoadingProvider } from '../loading/loading'
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
 
-  constructor(public authProvider: AuthProvider) { }
+  constructor(
+    public authProvider: AuthProvider,
+    public loadingProvider: LoadingProvider) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
 
 
+    this.loadingProvider.show();
     console.log("HttpHandler: ", next);
     const newRequest = req.clone({
       headers: req.headers.set(
@@ -140,7 +146,18 @@ export class AuthHttpInterceptor implements HttpInterceptor {
       )
     });
     console.log("Interceptor inject TOKEN ", newRequest, next);
-    return next.handle(newRequest);
+    return next.handle(newRequest)
+            .do(event => {
+              console.log('detecting event ', event);
+              if (event instanceof HttpResponse) {
+                  console.log('detecting http response');
+                  this.loadingProvider.hide();
+              }
+            })
+            .catch((error: any) => {
+              console.log("ERROR", error);
+              return Observable.throw(error);
+            });
   }
 }
 
