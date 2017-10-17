@@ -19,6 +19,7 @@ export class AwsLoginPage {
 
 
   credentials: Credentials = { username: '', password: ''};
+  remember: boolean;
 
   constructor(
     public navCtrl: NavController, 
@@ -43,6 +44,7 @@ export class AwsLoginPage {
 
   login() {
     this.AuthProvider.setCredentials(this.credentials);
+    this.AuthProvider.login();
     this.navCtrl.pop();
   }
 

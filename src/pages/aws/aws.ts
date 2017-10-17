@@ -58,10 +58,10 @@ export class AwsPage {
     console.log('ionViewDidLoad AwsPage');
 
     // Login
-    console.log("ionViewDidLoad" , this.loadingProvider);
+    console.log("ionViewDidLoad");
 
     this.loadingProvider.show();
-    this.authProvider.getToken()
+    this.authProvider.login()
     .then(
       result => {
         this.loadingProvider.hide();
@@ -84,7 +84,7 @@ export class AwsPage {
   }
 
   logout() {
-    this.authProvider.removeCredentials();
+    this.authProvider.logout();
     this.navCtrl.push(AwsLoginPage);
   }
   
