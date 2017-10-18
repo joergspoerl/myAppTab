@@ -29,8 +29,10 @@
         "cordova-android": "^6.2.3",
         "cordova-browser": "^4.1.0",
         "cordova-ios": "^4.5.1",
+        "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-crosswalk-webview": "^2.3.0",
         "cordova-plugin-device": "^1.1.4",
+        "cordova-plugin-geolocation": "^2.4.3",
         "cordova-plugin-ionic-webview": "^1.1.14",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
@@ -67,6 +69,9 @@
                 "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
                 "XWALK_MODE": "embedded",
                 "XWALK_MULTIPLEAPK": "true"
+            },
+            "cordova-plugin-geolocation": {
+                "GEOLOCATION_USAGE_DESCRIPTION": " "
             }
         }
     }
