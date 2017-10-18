@@ -21,21 +21,21 @@
           <form (ngSubmit)="login(form)">
 
             <ion-item>
-              <ion-label fixed>
+              <ion-label stacked>
                 Username
               </ion-label>
               <ion-input [(ngModel)]="credentials.username" name="username" type="text"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label fixed>
+              <ion-label stacked>
                 Password
               </ion-label>
               <ion-input [(ngModel)]="credentials.password" name="password" type="password"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label fixed>
+              <ion-label stacked>
                 Remember
               </ion-label>
               <ion-toggle [(ngModel)]="credentials.remember" name="remember"></ion-toggle>

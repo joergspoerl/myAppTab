@@ -44,7 +44,9 @@ export class AwsLoginPage {
 
   login() {
     this.AuthProvider.setCredentials(this.credentials);
-    this.AuthProvider.login();
+    this.AuthProvider.login()
+    .then()
+    .catch();
     this.navCtrl.pop();
   }
 
