@@ -35,6 +35,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthProvider } from '../providers/auth/auth';
 import { LoadingProvider } from '../providers/loading/loading';
 
+import { FilesystemPage } from '../pages/filesystem/filesystem';
+import { File } from '@ionic-native/file';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -48,6 +51,7 @@ import { LoadingProvider } from '../providers/loading/loading';
     AwsLogDetailsPage,
     AwsLoginPage,
     GoogleMapsPage,
+    FilesystemPage,
     TabsPage
     ],
   imports: [
@@ -71,6 +75,7 @@ import { LoadingProvider } from '../providers/loading/loading';
     AwsLogDetailsPage,
     AwsLoginPage,
     GoogleMapsPage,
+    FilesystemPage,
     TabsPage
   ],
   providers: [
@@ -83,7 +88,8 @@ import { LoadingProvider } from '../providers/loading/loading';
     AuthProvider,
     AuthProvider,
     LoadingProvider,
-    Geolocation
+    Geolocation,
+    File
   ]
 })
 export class AppModule {}

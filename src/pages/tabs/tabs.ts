@@ -8,6 +8,8 @@ import { ChartPage } from '../chart/chart';
 
 import { GoogleMapsPage } from '../google-maps/google-maps';
 
+import { FilesystemPage } from '../filesystem/filesystem';
+
 
 @Component({
   templateUrl: 'tabs.html'
@@ -20,6 +22,7 @@ export class TabsPage {
   tab4Root = ContactPage;
   tab5Root = ChartPage;
   tab6Root = GoogleMapsPage;
+  tab7Root = FilesystemPage;
 
   constructor() {
 
