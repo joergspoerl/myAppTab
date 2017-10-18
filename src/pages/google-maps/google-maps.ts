@@ -47,7 +47,7 @@ export class GoogleMapsPage {
 
       .catch((error) => {
         // default position, if no geolocation
-        latLng = new google.maps.LatLng(51.0504088, 13.7372621);
+        latLng = new google.maps.LatLng(51.0504088, 13.7372621); // dresden
         this.loadMap(latLng);
       })
   }
