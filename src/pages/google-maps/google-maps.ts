@@ -3,6 +3,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { Geolocation } from '@ionic-native/geolocation';
 declare var google;
 
 /**
@@ -21,29 +22,47 @@ export class GoogleMapsPage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
- 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public geolocation: Geolocation) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GoogleMapsPage');
-    this.loadMap();
+    this.setLatLng();
   }
 
-  loadMap(){
-    
-       //let latLng = new google.maps.LatLng(-34.9290, 138.6010);
-       let latLng = new google.maps.LatLng(51.0504088, 13.7372621);
+  setLatLng() {
+    let latLng;
+    this.geolocation.getCurrentPosition()
 
-       let mapOptions = {
-         center: latLng,
-         zoom: 15,
-         mapTypeId: google.maps.MapTypeId.ROADMAP
-       }
+      .then((position) => {
+        // use current geoposition
+        latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        this.loadMap(latLng);
+      })
+
+      .catch((error) => {
+        // default position, if no geolocation
+        latLng = new google.maps.LatLng(51.0504088, 13.7372621);
+        this.loadMap(latLng);
+      })
+  }
+
+  loadMap(latLng) {
+
     
-       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    
-     }
+    let mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+  }
 
 }

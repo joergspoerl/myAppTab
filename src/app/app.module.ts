@@ -22,6 +22,7 @@ import { AwsLogDetailsPage } from '../pages/aws/aws-log/aws-log-details/aws-log-
 import { AwsLoginPage } from '../pages/aws/aws-login/aws-login';
 
 import { GoogleMapsPage } from '../pages/google-maps/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -81,7 +82,8 @@ import { LoadingProvider } from '../providers/loading/loading';
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true},
     AuthProvider,
     AuthProvider,
-    LoadingProvider
+    LoadingProvider,
+    Geolocation
   ]
 })
 export class AppModule {}
