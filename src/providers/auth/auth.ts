@@ -26,7 +26,8 @@ export class AuthProvider {
 
   constructor(
     public http: Http,
-    private storage: Storage) {
+    private storage: Storage,
+    private loadingProvider: LoadingProvider) {
     console.log('Hello AuthProvider Provider');
   }
 
@@ -35,7 +36,7 @@ export class AuthProvider {
       this.storage.get(this.credentialsStoreKey).then((val => {
         if (val != null) {
           this.credentials = JSON.parse(val);
-          this.login();
+          //this.login();
         } else {
           this.credentials = new Credentials();
         }
@@ -75,11 +76,13 @@ export class AuthProvider {
         + '&password=' + this.credentials.password + '&grant_type=password';
       let headers: Headers = new Headers({ 'Content-Type': ['application/x-www-form-urlencoded', 'application/json'] });
 
+      this.loadingProvider.show();
       //get token from server
       this.http.post(this.baseUrl + this.tokenUrl, body, { headers: headers })
         .subscribe(
 
         response => {
+          this.loadingProvider.hide();
           this.token = response.json() as Token;
           console.log("getToken ->", this.token);
           this.isAuthenticated = true;
@@ -87,6 +90,7 @@ export class AuthProvider {
         },
 
         error => {
+          this.loadingProvider.hide();
           return reject(error);
         }
         )
@@ -136,12 +140,18 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 
     this.loadingProvider.show();
     console.log("HttpHandler: ", next);
-    const newRequest = req.clone({
-      headers: req.headers.set(
-        'Authorization',
-        this.authProvider.headers_prefix + this.authProvider.token.access_token
-      )
-    });
+    let newRequest;
+
+    if (this.authProvider.isAuthenticated && this.authProvider.token) {
+       newRequest = req.clone({
+        headers: req.headers.set(
+          'Authorization',
+          this.authProvider.headers_prefix + this.authProvider.token.access_token
+        )
+      });
+    } else {
+      newRequest = req.clone();
+    }
     console.log("Interceptor inject TOKEN ", newRequest, next);
     return next.handle(newRequest)
       .do(event => {
@@ -152,7 +162,8 @@ export class AuthHttpInterceptor implements HttpInterceptor {
         }
       })
       .catch((error: any) => {
-        console.log("ERROR", error);
+        console.log("Interceptor -> ERROR", error);
+        this.loadingProvider.hide();
         return Observable.throw(error);
       });
   }

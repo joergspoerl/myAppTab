@@ -60,18 +60,20 @@ export class AwsPage {
     // Login
     console.log("ionViewDidLoad");
 
-    this.loadingProvider.show();
-    this.authProvider.login()
-    .then(
-      result => {
-        this.loadingProvider.hide();
-      })
-    .catch(
-      error  => {
-        this.loadingProvider.hide();
-        this.showLogin();
-      });
+    // this.loadingProvider.show();
+    // this.authProvider.login()
+    // .then(
+    //   result => {
+    //     this.loadingProvider.hide();
+    //   })
+    // .catch(
+    //   error  => {
+    //     this.loadingProvider.hide();
+    //     this.showLogin();
+    //   });
       
+    if (!this.authProvider.isAuthenticated)
+      this.showLogin();
   }
 
   clickMenu(item) {

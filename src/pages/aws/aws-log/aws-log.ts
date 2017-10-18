@@ -28,25 +28,17 @@ export class AwsLogPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AwsLogPage');    
-    this.loadLog3();  
+    this.getRequestLog();  
   }
 
-  loadLog() {
-    this.awsMobileProvider.getRequestLog2()
-    .then(response => {
-      this.awsRequestLog = response as AwsRequestLogEntry[];
-    })
-    .catch(error => {
-      console.log("Error: ", error);
-    })
-  }
 
-  loadLog3() {
-    this.awsMobileProvider.getRequestLog3().subscribe(
+  getRequestLog() {
+    this.awsMobileProvider.getRequestLog().subscribe(
       result => {
         this.awsRequestLog = result as AwsRequestLogEntry[];
         },
       error => {
+        console.log("getRequestLog() -> Error: ", error);
       })
   }
 
