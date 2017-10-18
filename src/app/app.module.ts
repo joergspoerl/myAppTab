@@ -21,6 +21,8 @@ import { AwsLogPage } from '../pages/aws/aws-log/aws-log';
 import { AwsLogDetailsPage } from '../pages/aws/aws-log/aws-log-details/aws-log-details';
 import { AwsLoginPage } from '../pages/aws/aws-login/aws-login';
 
+import { GoogleMapsPage } from '../pages/google-maps/google-maps';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WeatherProvider } from '../pages/weather/providers/weather/weather';
@@ -44,6 +46,7 @@ import { LoadingProvider } from '../providers/loading/loading';
     AwsLogPage,
     AwsLogDetailsPage,
     AwsLoginPage,
+    GoogleMapsPage,
     TabsPage
     ],
   imports: [
@@ -66,6 +69,7 @@ import { LoadingProvider } from '../providers/loading/loading';
     AwsLogPage,
     AwsLogDetailsPage,
     AwsLoginPage,
+    GoogleMapsPage,
     TabsPage
   ],
   providers: [

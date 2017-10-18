@@ -6,6 +6,9 @@ import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 import { ChartPage } from '../chart/chart';
 
+import { GoogleMapsPage } from '../google-maps/google-maps';
+
+
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -16,7 +19,8 @@ export class TabsPage {
   tab3Root = AboutPage;
   tab4Root = ContactPage;
   tab5Root = ChartPage;
-  
+  tab6Root = GoogleMapsPage;
+
   constructor() {
 
   }
