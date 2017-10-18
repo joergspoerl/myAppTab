@@ -28,6 +28,7 @@
         "@ionic/storage": "2.0.1",
         "angular2-jwt": "^0.2.3",
         "chart.js": "^2.7.0",
+        "com.couchbase.lite.phonegap": "git+https://github.com/couchbaselabs/Couchbase-Lite-PhoneGap-Plugin.git",
         "cordova-android": "^6.3.0",
         "cordova-browser": "^4.1.0",
         "cordova-ios": "^4.5.1",
@@ -76,7 +77,8 @@
             "cordova-plugin-geolocation": {
                 "GEOLOCATION_USAGE_DESCRIPTION": " "
             },
-            "cordova-plugin-file": {}
+            "cordova-plugin-file": {},
+            "com.couchbase.lite.phonegap": {}
         }
     }
 }
