@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ContactProvider } from '../../providers/contact/contact'
+import { ContactProvider } from '../../providers/contact/contact';
+import { ContactDetailsPage } from '../contact-details/contact-details'
 
 @Component({
   selector: 'page-contact',
@@ -33,4 +34,9 @@ export class ContactPage {
       }
     )
   }
+
+  gotoContactDetails(contact) {
+    this.navCtrl.push(ContactDetailsPage, { 'contact' : contact });
+  }
+
 }

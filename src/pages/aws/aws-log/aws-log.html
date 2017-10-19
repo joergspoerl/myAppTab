@@ -9,20 +9,18 @@
   <ion-navbar>
     <ion-title>AWS Log</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only  (click)="loadLog()">
+      <button ion-button icon-only (click)="loadLog()">
         <ion-icon name="refresh"></ion-icon>
       </button>
-      </ion-buttons>
-</ion-navbar>
+    </ion-buttons>
+  </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of awsRequestLog" 
-    [ngStyle]="{'background-color': item.COLOR}"
-    (click)="gotoAwsLogDetails(item)">
+    <button ion-item *ngFor="let item of awsRequestLog" [ngStyle]="{'background-color': item.COLOR}" (click)="gotoAwsLogDetails(item)">
       <h1 item-start>
         <ion-icon name="ios-information-circle" item-start></ion-icon>
       </h1>

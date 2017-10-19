@@ -17,7 +17,7 @@ export class ContactProvider {
   }
 
   getAllContacts() {
-    return this.httpClient.get('../assets/data/contact-300.json')
+    return this.httpClient.get('../assets/data/contact-600.json')
   }
 
 }

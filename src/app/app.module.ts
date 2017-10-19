@@ -40,6 +40,8 @@ import { File } from '@ionic-native/file';
 
 import { ContactProvider } from '../providers/contact/contact';
 import { SearchPipe } from '../pipe/searchPipe'
+import { ContactDetailsPage } from '../pages/contact-details/contact-details'
+
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { SearchPipe } from '../pipe/searchPipe'
     GoogleMapsPage,
     FilesystemPage,
     TabsPage,
-    SearchPipe
+    SearchPipe,
+    ContactDetailsPage
     ],
   imports: [
     BrowserModule,
@@ -80,7 +83,8 @@ import { SearchPipe } from '../pipe/searchPipe'
     AwsLoginPage,
     GoogleMapsPage,
     FilesystemPage,
-    TabsPage
+    TabsPage,
+    ContactDetailsPage
   ],
   providers: [
     StatusBar,

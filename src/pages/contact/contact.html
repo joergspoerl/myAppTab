@@ -2,12 +2,12 @@
   <ion-navbar>
 
     <ion-title>
-      Contact
+      Contacts
     </ion-title>
 
     
     <ion-buttons end>
-      <button ion-button icon-only (click)="loadLog()">
+      <button ion-button icon-only (click)="getAllContacts()">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -28,11 +28,12 @@
 
   <ion-list>
 
-    <ion-item *ngFor="let contact of contacts | search:'name,address':query">
+    <button ion-item *ngFor="let contact of contacts | search:'name,address':query"
+            (click)="gotoContactDetails(contact)">
       <h1>{{contact.name}}</h1>
       <h2>{{contact.phone}}</h2>
       <h3>{{contact.address}}</h3>
-    </ion-item>
+    </button>
 
   </ion-list>
 </ion-content>
