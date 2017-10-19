@@ -37,7 +37,9 @@ import { LoadingProvider } from '../providers/loading/loading';
 
 import { FilesystemPage } from '../pages/filesystem/filesystem';
 import { File } from '@ionic-native/file';
+
 import { ContactProvider } from '../providers/contact/contact';
+import { SearchPipe } from '../pipe/searchPipe'
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { ContactProvider } from '../providers/contact/contact';
     AwsLoginPage,
     GoogleMapsPage,
     FilesystemPage,
-    TabsPage
+    TabsPage,
+    SearchPipe
     ],
   imports: [
     BrowserModule,

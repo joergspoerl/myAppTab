@@ -1,15 +1,34 @@
 <ion-header>
   <ion-navbar>
+
     <ion-title>
       Contact
     </ion-title>
+
+    
+    <ion-buttons end>
+      <button ion-button icon-only (click)="loadLog()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
-</ion-header>
+
+  <ion-navbar>
+      <ion-input style="background-color:white;"
+                placeholder="Search ..."
+                [(ngModel)]="query">
+      </ion-input>
+    </ion-navbar>
+
+  </ion-header>
+
 
 <ion-content>
+
   <ion-list>
 
-    <ion-item *ngFor="let contact of contacts">
+    <ion-item *ngFor="let contact of contacts | search:'name,address':query">
       <h1>{{contact.name}}</h1>
       <h2>{{contact.phone}}</h2>
       <h3>{{contact.address}}</h3>
