@@ -123,6 +123,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 import { LoadingProvider } from '../loading/loading'
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';

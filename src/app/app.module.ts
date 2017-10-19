@@ -37,6 +37,7 @@ import { LoadingProvider } from '../providers/loading/loading';
 
 import { FilesystemPage } from '../pages/filesystem/filesystem';
 import { File } from '@ionic-native/file';
+import { ContactProvider } from '../providers/contact/contact';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { File } from '@ionic-native/file';
     AuthProvider,
     LoadingProvider,
     Geolocation,
-    File
+    File,
+    ContactProvider
   ]
 })
 export class AppModule {}
