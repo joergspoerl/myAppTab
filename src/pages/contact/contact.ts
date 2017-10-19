@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ContactProvider } from '../../providers/contact/contact';
 import { ContactDetailsPage } from '../contact-details/contact-details'
-
+import { GoogleMapsPage } from '../google-maps/google-maps'
+ 
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'
@@ -38,5 +39,18 @@ export class ContactPage {
   gotoContactDetails(contact) {
     this.navCtrl.push(ContactDetailsPage, { 'contact' : contact });
   }
+
+  showMap() {
+    var markers = [];
+    for (let entry of this.contacts) {
+      markers.push({ lat: entry.latitude, lng: entry.longitude})      
+    }
+    // for (var i = 1; i< 10; i++) {
+    //   markers.push({ lat: this.contacts[i].latitude, lng: this.contacts[i].longitude})
+    // }
+    console.log("markers", markers)
+    this.navCtrl.push(GoogleMapsPage, { 'latLng' : { lat: 51.0504088, lng: 13.7372621 }, 'latLngArray': markers });
+  }
+  
 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 
+
 /*
   Generated class for the ContactProvider provider.
 
@@ -12,12 +13,13 @@ import 'rxjs/add/operator/map';
 export class ContactProvider {
 
   constructor(
-    public httpClient: HttpClient) {
+    public httpClient: HttpClient){
     console.log('Hello ContactProvider Provider');
   }
 
   getAllContacts() {
     return this.httpClient.get('../assets/data/contact-600.json')
   }
+
 
 }

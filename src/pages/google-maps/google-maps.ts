@@ -24,14 +24,17 @@ export class GoogleMapsPage {
   map: any;
 
   latLng: LatLng;
+  latLngArray: LatLng[];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public geolocation: Geolocation) {
 
-      this.latLng = navParams.get('latLng');
-    }
+    this.latLng = navParams.get('latLng');
+    this.latLngArray = navParams.get('latLngArray');
+    
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GoogleMapsPage');
@@ -40,9 +43,10 @@ export class GoogleMapsPage {
       let latLng = new google.maps.LatLng(this.latLng);
       this.loadMap(latLng);
       this.setMarker(latLng);
+      this.setMarkerArray(this.latLngArray);
     }
     else
-        this.setLatLng();
+      this.setLatLng();
   }
 
   setLatLng() {
@@ -64,7 +68,7 @@ export class GoogleMapsPage {
 
   loadMap(latLng) {
 
-    
+
     let mapOptions = {
       center: latLng,
       zoom: 10,
@@ -75,20 +79,23 @@ export class GoogleMapsPage {
 
   }
 
+  setMarkerArray(latLng) {
+    for (let entry of latLng) {
+      this.setMarker(entry);
+    }
+  }
 
   setMarker(latLng) {
+    console.log("createMarker", latLng)
     var marker = new google.maps.Marker({
       position: latLng,
       map: this.map
     });
-
   }
-
 }
 
 
-export interface LatLng  
-{
-  lat: number, 
+export interface LatLng {
+  lat: number,
   lng: number
 };

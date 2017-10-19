@@ -19,6 +19,13 @@
                 placeholder="Search ..."
                 [(ngModel)]="query">
       </ion-input>
+
+      <ion-buttons end>
+          <button ion-button icon-only (click)="showMap()">
+            <ion-icon name="globe"></ion-icon>
+          </button>
+        </ion-buttons>
+    
     </ion-navbar>
 
   </ion-header>
