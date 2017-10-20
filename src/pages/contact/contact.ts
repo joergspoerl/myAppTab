@@ -26,7 +26,7 @@ export class ContactPage {
     this.contactProvider.getAllContacts().subscribe(
 
       result => {
-        this.contacts = result;
+        this.contacts = result.json();
         console.log("this.contacts", this.contacts)
       },
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 
@@ -13,12 +13,12 @@ import 'rxjs/add/operator/map';
 export class ContactProvider {
 
   constructor(
-    public httpClient: HttpClient){
+    public http: Http){
     console.log('Hello ContactProvider Provider');
   }
 
   getAllContacts() {
-    return this.httpClient.get('../assets/data/contact-600.json')
+    return this.http.get('/assets/data/contact-600.json')
   }
 
 
