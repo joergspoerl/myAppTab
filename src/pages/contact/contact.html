@@ -5,38 +5,29 @@
       Contacts
     </ion-title>
 
-    
     <ion-buttons end>
       <button ion-button icon-only (click)="getAllContacts()">
         <ion-icon name="refresh"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="showMap()">
+        <ion-icon name="globe"></ion-icon>
       </button>
     </ion-buttons>
 
   </ion-navbar>
 
   <ion-navbar>
-      <ion-input style="background-color:white;"
-                placeholder="Search ..."
-                [(ngModel)]="query">
-      </ion-input>
-
-      <ion-buttons end>
-          <button ion-button icon-only (click)="showMap()">
-            <ion-icon name="globe"></ion-icon>
-          </button>
-        </ion-buttons>
-    
-    </ion-navbar>
-
-  </ion-header>
+    <ion-input style="background-color:white;" placeholder="Search ..." [(ngModel)]="query">
+    </ion-input>
+  </ion-navbar>
+</ion-header>
 
 
 <ion-content>
 
   <ion-list>
 
-    <button ion-item *ngFor="let contact of contacts | search:'name,address':query"
-            (click)="gotoContactDetails(contact)">
+    <button ion-item *ngFor="let contact of contacts | search:'name,address':query" (click)="gotoContactDetails(contact)">
       <h1>{{contact.name}}</h1>
       <h2>{{contact.phone}}</h2>
       <h3>{{contact.address}}</h3>
