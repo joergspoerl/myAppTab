@@ -79,10 +79,11 @@ export class GoogleMapsPage {
 
   }
 
-  setMarkerArray(latLng) {
-    for (let entry of latLng) {
-      this.setMarker(entry);
-    }
+  setMarkerArray(latLngArray) {
+    if (Array.isArray(latLngArray))
+      for (let entry of latLngArray) {
+        this.setMarker(entry);
+      }
   }
 
   setMarker(latLng) {
