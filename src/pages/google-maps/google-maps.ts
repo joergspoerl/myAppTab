@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Geolocation } from '@ionic-native/geolocation';
 declare var google;
+declare var GeolocationMarker;
 
 /**
  * Generated class for the GoogleMapsPage page.
@@ -23,7 +24,7 @@ export class GoogleMapsPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  latLng: LatLng;
+  currentPosition: LatLng;
   latLngArray: LatLng[];
   bounds: any;
 
@@ -35,7 +36,7 @@ export class GoogleMapsPage {
     public navParams: NavParams,
     public geolocation: Geolocation) {
 
-    this.latLng = navParams.get('latLng');
+    //this.latLng = navParams.get('latLng');
     this.latLngArray = navParams.get('latLngArray');
     
   }
@@ -43,48 +44,61 @@ export class GoogleMapsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad GoogleMapsPage');
 
-    if (this.latLng) {
-      let latLng = new google.maps.LatLng(this.latLng);
-      this.loadMap(latLng);
-      this.setMarker(latLng);
-      this.setMarkerArray(this.latLngArray);
+    this.loadMap();
+    this.getCurrentPosition();
 
-      this.autoCenterMap();
-      this.autoZoomMap();
-    }
-    else
-      this.setLatLng();
+    this.setMarkerArray(this.latLngArray);
+
+    this.autoCenterMap();
+    this.autoZoomMap();
+
   }
 
-  setLatLng() {
-    let latLng;
+  getCurrentPosition() {
+    console.log("getCurrentPosition()");
     this.geolocation.getCurrentPosition()
 
       .then((position) => {
         // use current geoposition
-        latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        this.loadMap(latLng);
+        this.currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        console.log("use current geoposition", this.currentPosition)
+        this.setMarkerWithImgUrl(this.currentPosition,this.currentPositionImageUrl);
+
+        this.activateGeolocationMarker();
+        this.autoCenterMap();
+        this.autoZoomMap();
+    
       })
 
       .catch((error) => {
         // default position, if no geolocation
-        latLng = new google.maps.LatLng(51.0504088, 13.7372621); // dresden
-        this.loadMap(latLng);
+        this.currentPosition = new google.maps.LatLng(51.0504088, 13.7372621); // dresden
+        console.log("default position, if no geolocation", this.currentPosition)
+        this.setMarkerWithImgUrl(this.currentPosition,this.currentPositionImageUrl);
+
+        this.activateGeolocationMarker();
+        this.autoCenterMap();
+        this.autoZoomMap();
+    
       })
   }
 
-  loadMap(latLng) {
+  loadMap() {
 
-
+    var defaultPosition = new google.maps.LatLng(51.0504088, 13.7372621);
     let mapOptions = {
-      center: latLng,
+      center: defaultPosition,
       zoom: 10,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     this.bounds  = new google.maps.LatLngBounds();
-    this.setMarkerWithImgUrl(latLng, this.currentPositionImageUrl);
+    //this.setMarkerWithImgUrl(latLng, this.currentPositionImageUrl);
+  }
+
+  activateGeolocationMarker() {
+    var GeoMarker = new GeolocationMarker(this.map);
   }
 
   setMarkerArray(latLngArray) {
@@ -95,7 +109,7 @@ export class GoogleMapsPage {
   }
 
   setMarker(latLng) {
-    console.log("createMarker", latLng)
+    //console.log("createMarker", latLng)
     var marker = new google.maps.Marker({
       position: latLng,
       map: this.map
@@ -105,7 +119,7 @@ export class GoogleMapsPage {
   }
 
   setMarkerWithImgUrl(latLng, imgUrl) {
-    console.log("createMarker", latLng)
+    //console.log("createMarker", latLng)
     var marker = new google.maps.Marker({
       position: latLng,
       map: this.map,

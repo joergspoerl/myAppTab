@@ -28,7 +28,7 @@ export class ContactDetailsPage {
   }
 
   showMap(contact) {
-    this.navCtrl.push(GoogleMapsPage, { 'latLng' : { lat: contact.latitude, lng: contact.longitude}});    
+    this.navCtrl.push(GoogleMapsPage, { 'latLngArray' : [{ lat: contact.latitude, lng: contact.longitude}]});    
   }
 
 }

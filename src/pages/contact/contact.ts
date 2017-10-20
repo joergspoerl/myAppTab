@@ -49,8 +49,11 @@ export class ContactPage {
     //   markers.push({ lat: this.contacts[i].latitude, lng: this.contacts[i].longitude})
     // }
     console.log("markers", markers)
-    this.navCtrl.push(GoogleMapsPage, { 'latLng' : { lat: 51.0504088, lng: 13.7372621 }, 'latLngArray': markers });
+    this.navCtrl.push(GoogleMapsPage, { 'latLngArray': markers });
   }
-  
+
+  showContactMap(contact) {
+    this.navCtrl.push(GoogleMapsPage, { 'latLngArray' : [{ lat: contact.latitude, lng: contact.longitude}]});    
+  }
 
 }
