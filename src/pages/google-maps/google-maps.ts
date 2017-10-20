@@ -25,6 +25,10 @@ export class GoogleMapsPage {
 
   latLng: LatLng;
   latLngArray: LatLng[];
+  bounds: any;
+
+  currentPositionImageUrl = 'http://www.robotwoods.com/dev/misc/bluecircle.png';
+  
 
   constructor(
     public navCtrl: NavController,
@@ -44,6 +48,9 @@ export class GoogleMapsPage {
       this.loadMap(latLng);
       this.setMarker(latLng);
       this.setMarkerArray(this.latLngArray);
+
+      this.autoCenterMap();
+      this.autoZoomMap();
     }
     else
       this.setLatLng();
@@ -76,7 +83,8 @@ export class GoogleMapsPage {
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
+    this.bounds  = new google.maps.LatLngBounds();
+    this.setMarkerWithImgUrl(latLng, this.currentPositionImageUrl);
   }
 
   setMarkerArray(latLngArray) {
@@ -92,7 +100,30 @@ export class GoogleMapsPage {
       position: latLng,
       map: this.map
     });
+    var loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+    this.bounds.extend(loc);
   }
+
+  setMarkerWithImgUrl(latLng, imgUrl) {
+    console.log("createMarker", latLng)
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: this.map,
+      icon: imgUrl
+    });
+    var loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+    this.bounds.extend(loc);
+  }
+
+  autoCenterMap () {
+    this.map.panToBounds(this.bounds);     // auto-center
+  }
+
+  autoZoomMap () {
+    this.map.fitBounds(this.bounds);       // auto-zoom
+  }
+
+
 }
 
 
