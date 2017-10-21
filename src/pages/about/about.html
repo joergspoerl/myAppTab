@@ -1,8 +1,19 @@
 <ion-header>
   <ion-navbar>
+
     <ion-title>
       Test List
     </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dummy()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="useCouchbase()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
@@ -21,7 +32,15 @@
         </ion-item>
         <ion-item>
           <ion-label>Input:</ion-label>
-          <ion-input placeholder="text here ..."></ion-input>
+          <ion-input placeholder="text here ..." [(ngModel)]="couchbaseUrl"></ion-input>
+        </ion-item>
+        <ion-item>
+          <button ion-button icon-only (click)="dummy()">
+            <ion-icon name="ok">ok</ion-icon>
+          </button>
+        </ion-item>
+        <ion-item>
+          <strong>Status:</strong> {{status}}
         </ion-item>
       </ion-col>
     </ion-row>

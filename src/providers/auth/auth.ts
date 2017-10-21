@@ -4,6 +4,7 @@ import { Http, Headers } from '@angular/http'; // Http - angular < 4.3
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+
 /*
   Generated class for the AuthProvider provider.
 

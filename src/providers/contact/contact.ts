@@ -19,6 +19,7 @@ export class ContactProvider {
 
   getAllContacts() {
     return this.http.get('/assets/data/contact-600.json')
+//    return this.http.get('http://www-stud.informatik.uni-frankfurt.de/')
   }
 
 
