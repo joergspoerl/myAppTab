@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ContactProvider } from '../../providers/contact/contact';
+import { ContactProvider, Contact } from '../../providers/contact/contact';
 import { ContactDetailsPage } from '../contact-details/contact-details'
 import { GoogleMapsPage } from '../google-maps/google-maps'
- 
+import { ToastController } from 'ionic-angular';
+
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'
@@ -14,7 +15,9 @@ export class ContactPage {
 
   constructor(
     public navCtrl: NavController,
-    public contactProvider: ContactProvider) {
+    public contactProvider: ContactProvider,
+    public toastCtrl: ToastController
+  ) {
 
   }
 
@@ -22,8 +25,8 @@ export class ContactPage {
     this.getAllContacts();
   }
 
-  getAllContacts() {
-    this.contactProvider.getAllContacts().subscribe(
+  getAllContactsStatic() {
+    this.contactProvider.getAllContactsStatic().subscribe(
 
       result => {
         this.contacts = result.json();
@@ -35,6 +38,25 @@ export class ContactPage {
       }
     )
   }
+
+  ionViewDidEnter() {
+    this.getAllContacts();
+  }
+
+  getAllContacts() {
+    this.contactProvider.getAllContacts().then(
+
+      result => {
+        this.contacts = result.docs;
+        console.log("this.contacts", this.contacts)
+      },
+
+      error => {
+        console.log("error", error)
+      }
+    )
+  }
+
 
   gotoContactDetails(contact) {
     this.navCtrl.push(ContactDetailsPage, { 'contact' : contact });
@@ -56,4 +78,33 @@ export class ContactPage {
     this.navCtrl.push(GoogleMapsPage, { 'latLngArray' : [{ lat: contact.latitude, lng: contact.longitude}]});    
   }
 
+  destroy() {
+    console.log("test")
+    this.contactProvider.destroy()
+  }
+
+  import() {
+    console.log("test")
+    this.contactProvider.createExampleContactDB();
+  }
+
+  sync() {
+    console.log("sync")
+    this.contactProvider.sync();
+  }
+
+  add() {
+    console.log("add")
+    this.navCtrl.push(ContactDetailsPage, { 'contact' : new Contact(), 'callback': this.reloadCallback });
+  }
+
+  reloadCallback () {
+    return new Promise ((resolve, reject) => {
+      this.getAllContacts();
+      resolve();
+    })
+  }
+
 }
+
+

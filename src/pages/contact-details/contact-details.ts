@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GoogleMapsPage } from '../google-maps/google-maps'
+import { ContactProvider } from '../../providers/contact/contact';
 
 /**
  * Generated class for the ContactDetailsPage page.
@@ -18,7 +19,11 @@ export class ContactDetailsPage {
 
   contact: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public contactProvider: ContactProvider,
+  ) {
     this.contact = navParams.get('contact');
     
   }
@@ -27,8 +32,20 @@ export class ContactDetailsPage {
     console.log('ionViewDidLoad ContactDetailsPage');
   }
 
+
   showMap(contact) {
     this.navCtrl.push(GoogleMapsPage, { 'latLngArray' : [{ lat: contact.latitude, lng: contact.longitude}]});    
   }
+
+  save(contact) {
+    console.log("save: ", contact);
+    this.contactProvider.save(contact).then(
+      ok => {
+        this.navCtrl.pop()
+      },
+      error => {}
+    );
+  }
+
 
 }
