@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 //import { List } from 'ionic-angular';
 // import { MyDataService } from '../../services/my-data.service'
-import { Couchbase, Database } from 'cordova-couchbase/core';
-import { Http, Headers } from '@angular/http'; // Http - angular < 4.3
+import { Http, Headers, RequestOptions } from '@angular/http'; // Http - angular < 4.3
 
 declare global {
   interface Window { cblite: any; }
@@ -16,7 +15,7 @@ declare global {
 export class AboutPage {
 
   status: any;
-  couchbaseUrl: string;
+  testUrl: string;
 
   constructor(
     public navCtrl: NavController,
@@ -24,7 +23,7 @@ export class AboutPage {
   ) {
     //    public myDataService: MyDataService
 
-    this.couchbaseUrl = 'http://lite.couchbase./'
+    this.testUrl = 'https://couchdb.jrg.deneb.uberspace.de/'
   }
 
   ionViewDidLoad() {
@@ -67,7 +66,8 @@ export class AboutPage {
   dummy () {
     console.log("dummy start -->", this.couchbaseUrl);
 
-    this.http.get(this.couchbaseUrl).subscribe(
+    let options = new RequestOptions({ withCredentials: true });
+    this.http.get(this.couchbaseUrl, options).subscribe(
       
       result => {
         console.log("result: ", JSON.stringify(result))
@@ -79,42 +79,6 @@ export class AboutPage {
       }
     )
 
-  }
-
-
-  useCouchbase() {
-    console.log("start useCouchbase");
-
-    var a = new Couchbase();
-
-    //(new Couchbase()).openDatabase("example-db")
-    a.openDatabase("example-db")
-
-    console.log("end useCouchbase");
-    
-
-    
-    // (new Couchbase()).openDatabase("example-db").then(
-
-      
-    //   database => {
-    //   // 'database' will be used with every future interaction with Couchbase
-    //     console.log("database",Database);
-      
-    //     database.createDocument({ "type": "todo", "title": "Wash Car" }).then(
-    //       result => {
-    //       // Do something with the result
-    //       console.log("result",result)
-    //       }, 
-    //       error => {
-    //       console.error(error);
-    //     });
-
-    //   }, 
-      
-    //   error => {
-    //   console.error(error);
-    // });
   }
 
 
