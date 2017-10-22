@@ -139,8 +139,8 @@ export class Contact {
       "address"= ""
       "about"= ""
       "registered"= ""
-      "latitude"= 50.327357
-      "longitude"= 13.131642
+      "latitude"= 50.327357 -  Math.random() 
+      "longitude"= 13.131642 -  Math.random()
       "tags"= []
       "friends"= []
       "greeting"= ""
