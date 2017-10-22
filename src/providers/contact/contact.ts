@@ -33,17 +33,16 @@ export class ContactProvider {
     this.initPouchDB();
   }
 
-  getAllContactsStatic() {
-    return this.http.get('/assets/data/contact-600.json')
-  }
-
-
   initPouchDB() {
-    this.db = new PouchDB('kittens');
+    this.db = new PouchDB('contacts');
     console.log("db", this.db);
 
-    this.dbRemote = new PouchDB('https://couchdb.jrg.deneb.uberspace.de/kittens');
+    this.dbRemote = new PouchDB('https://contact:contact@jrg.deneb.uberspace.de/couchdb/contacts');
     console.log("dbRemote", this.dbRemote);
+  }
+
+  getAllContactsStatic() {
+    return this.http.get('/assets/data/contact-600.json')
   }
 
   getAllContacts() {
@@ -51,9 +50,8 @@ export class ContactProvider {
       selector: {
         type: 'contact-example'
       }
-    });
+    })
   }
-
 
   createExampleContactDB() {
     console.log("createExampleContactDB() start")
@@ -84,28 +82,9 @@ export class ContactProvider {
   }
 
   sync() {
-    console.log("Sync is startet");
-    
-    this.loading.show();
-    
-    this.db.sync(this.dbRemote).then(
-      ok => {
-        console.log("Sync is ended: ", ok);
-        this.loading.hide();
+    return this.db.sync(this.dbRemote);
+  } 
 
-        this.presentToast({
-          message: 'Sync was successfully\n Read ' + ok.push.docs_read + ' -  Write ' + ok.push.docs_written  + '\n Read ' + + ok.pull.docs_read + ' - Write ' + ok.pull.docs_written ,
-          duration: 10000,
-          position: 'middle'
-        });
-        
-      },
-      error => {
-        console.log("Sync Error: ", error);
-        this.loading.hide();
-        
-      })
-  }
 
   createIndexAllContacts() {
     this.loading.show();
@@ -121,36 +100,19 @@ export class ContactProvider {
       });
   }
 
-  destroy() {
-    this.loading.show();
-    this.db.destroy().then(
-      ok => { 
-        console.log(ok);
-        this.initPouchDB();
-        this.loading.hide();
-      },
-      error => { 
-        console.log(error)
-        this.loading.hide();
-      }
-    )
-  }
-
+  
   save(contact) {
     return this.db.put(contact)
   }
 
-
-
-  presentToast(init) {
-    const toast = this.toastCtrl.create(init);
-  
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-  
-    toast.present();
+  remove(contact) {
+    return this.db.remove(contact)
   }
+
+  destroy() {
+    return  this.db.destroy()    
+  }
+
   
 
 

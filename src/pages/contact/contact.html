@@ -6,18 +6,18 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="getAllContacts()">
+      <!-- <button ion-button icon-only (click)="getAllContacts()">
         <ion-icon name="refresh"></ion-icon>
-      </button>
+      </button> -->
       <button ion-button icon-only (click)="showMap()">
         <ion-icon name="globe"></ion-icon>
       </button>
       <button ion-button icon-only (click)="destroy()">
         <ion-icon name="trash"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="import()">
+      <!-- <button ion-button icon-only (click)="import()">
         <ion-icon name="code-download"></ion-icon>
-      </button>
+      </button> -->
       <button ion-button icon-only (click)="sync()">
         <ion-icon name="sync"></ion-icon>
       </button>
@@ -48,6 +48,9 @@
       <ion-item-options side="right">
           <button ion-button expandable (click)="showContactMap(contact)">
             <ion-icon name="globe"></ion-icon>
+          </button>
+          <button ion-button expandable (click)="remove(contact)">
+            <ion-icon name="trash"></ion-icon>
           </button>
         </ion-item-options>      
     </ion-item-sliding>

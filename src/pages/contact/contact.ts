@@ -3,6 +3,9 @@ import { NavController } from 'ionic-angular';
 import { ContactProvider, Contact } from '../../providers/contact/contact';
 import { ContactDetailsPage } from '../contact-details/contact-details'
 import { GoogleMapsPage } from '../google-maps/google-maps'
+
+import { LoadingProvider } from '../../providers/loading/loading'
+
 import { ToastController } from 'ionic-angular';
 
 @Component({
@@ -11,33 +14,41 @@ import { ToastController } from 'ionic-angular';
 })
 export class ContactPage {
 
+  db: any;
+  dbRemote: any;
+
   contacts: any;
 
   constructor(
     public navCtrl: NavController,
     public contactProvider: ContactProvider,
+    public loading: LoadingProvider,
     public toastCtrl: ToastController
   ) {
 
+        
   }
 
   ionViewDidLoad() {
     this.getAllContacts();
   }
 
-  getAllContactsStatic() {
-    this.contactProvider.getAllContactsStatic().subscribe(
 
-      result => {
-        this.contacts = result.json();
-        console.log("this.contacts", this.contacts)
-      },
 
-      error => {
-        console.log("error", error)
-      }
-    )
-  }
+
+  // getAllContactsStatic() {
+  //   this.contactProvider.getAllContactsStatic().subscribe(
+
+  //     result => {
+  //       this.contacts = result.json();
+  //       console.log("this.contacts", this.contacts)
+  //     },
+
+  //     error => {
+  //       console.log("error", error)
+  //     }
+  //   )
+  // }
 
   ionViewDidEnter() {
     this.getAllContacts();
@@ -79,30 +90,90 @@ export class ContactPage {
   }
 
   destroy() {
-    console.log("test")
-    this.contactProvider.destroy()
-  }
+    this.loading.show();
+    this.contactProvider.destroy().then(
+      ok => { 
+        console.log(ok);
+        this.contactProvider.initPouchDB();
+        this.loading.hide();
+        this.getAllContacts();
+      },
+      error => { 
+        console.log(error)
+        this.loading.hide();
+      }
+    )
+}
 
   import() {
     console.log("test")
     this.contactProvider.createExampleContactDB();
   }
 
-  sync() {
-    console.log("sync")
-    this.contactProvider.sync();
-  }
 
   add() {
     console.log("add")
-    this.navCtrl.push(ContactDetailsPage, { 'contact' : new Contact(), 'callback': this.reloadCallback });
+    this.navCtrl.push(ContactDetailsPage, { 'contact' : new Contact() });
   }
 
-  reloadCallback () {
-    return new Promise ((resolve, reject) => {
-      this.getAllContacts();
-      resolve();
+  remove(contact) {
+    this.loading.show();
+    
+    this.contactProvider.remove(contact).then(
+      ok => {
+        console.log("Remove is ended: ", ok);
+        this.loading.hide();
+  
+        this.presentToast({
+          message: 'Removed',
+          duration: 3000,
+          position: 'middle'
+        });  
+        
+        this.getAllContacts()
+      },
+      error => {
+        console.log("Remove Error: ", error);
+        this.loading.hide();
+      })
+      
+  }
+
+
+sync() {
+  console.log("Sync is startet");
+  
+  this.loading.show();
+  
+  this.contactProvider.sync().then(
+    ok => {
+      console.log("Sync is ended: ", ok);
+      this.loading.hide();
+
+      this.presentToast({
+        message: 'Sync was successfully\n Read ' + ok.push.docs_read + ' -  Write ' + ok.push.docs_written  + '\n Read ' + + ok.pull.docs_read + ' - Write ' + ok.pull.docs_written ,
+        duration: 10000,
+        position: 'middle'
+      });  
+      
+      this.getAllContacts()
+    },
+    error => {
+      console.log("Sync Error: ", error);
+      this.loading.hide();
     })
+  }
+
+
+
+  presentToast(init) {
+    const toast = this.toastCtrl.create(init);
+  
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+  
+    toast.present();
   }
 
 }
