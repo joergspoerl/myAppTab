@@ -5,10 +5,9 @@ import { AwsPage } from '../aws/aws';
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 import { ChartPage } from '../chart/chart';
-
 import { GoogleMapsPage } from '../google-maps/google-maps';
-
 import { FilesystemPage } from '../filesystem/filesystem';
+import { EllicorePage } from '../ellicore/ellicore';
 
 
 @Component({
@@ -22,7 +21,7 @@ export class TabsPage {
   tab4Root = ContactPage;
   tab5Root = ChartPage;
   tab6Root = GoogleMapsPage;
-  tab7Root = FilesystemPage;
+  tab7Root = EllicorePage;
 
   constructor() {
 

@@ -24,6 +24,8 @@ import { AwsLoginPage } from '../pages/aws/aws-login/aws-login';
 import { GoogleMapsPage } from '../pages/google-maps/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 
+import { EllicorePage } from '../pages/ellicore/ellicore';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WeatherProvider } from '../pages/weather/providers/weather/weather';
@@ -41,6 +43,7 @@ import { File } from '@ionic-native/file';
 import { ContactProvider } from '../providers/contact/contact';
 import { SearchPipe } from '../pipe/searchPipe'
 import { ContactDetailsPage } from '../pages/contact-details/contact-details'
+import { EllicoreProvider } from '../providers/ellicore/ellicore';
 
 
 @NgModule({
@@ -57,6 +60,7 @@ import { ContactDetailsPage } from '../pages/contact-details/contact-details'
     AwsLoginPage,
     GoogleMapsPage,
     FilesystemPage,
+    EllicorePage,
     TabsPage,
     SearchPipe,
     ContactDetailsPage
@@ -83,6 +87,7 @@ import { ContactDetailsPage } from '../pages/contact-details/contact-details'
     AwsLoginPage,
     GoogleMapsPage,
     FilesystemPage,
+    EllicorePage,
     TabsPage,
     ContactDetailsPage
   ],
@@ -98,7 +103,8 @@ import { ContactDetailsPage } from '../pages/contact-details/contact-details'
     LoadingProvider,
     Geolocation,
     File,
-    ContactProvider
+    ContactProvider,
+    EllicoreProvider
   ]
 })
 export class AppModule {}

@@ -23,13 +23,11 @@ export class ContactProvider {
   constructor(
     public http: Http,
     public loading: LoadingProvider,
-    public toastCtrl: ToastController
-  ) {
+    ) {
     console.log('Hello ContactProvider Provider');
 
     // init 
     PouchDB.plugin(find);
-
     this.initPouchDB();
   }
 
