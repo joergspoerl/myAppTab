@@ -16,6 +16,9 @@ import { EllicoreProvider } from '../../providers/ellicore/ellicore'
 })
 export class EllicorePage {
 
+  timer: any;
+  current: any = {};
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -25,7 +28,51 @@ export class EllicorePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EllicorePage');
-    this.sync();
+  }
+
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter()")
+
+    this.ellicoreProvider.db.get("controll").then(
+      controll => {
+        controll.running = true;
+          this.ellicoreProvider.db.put(controll).then(
+            ok => {
+              console.log("running !!")
+              this.sync();
+
+              setTimeout( () => {
+                this.getCurrent();
+              }, 200);
+          
+              this.timer = setInterval( () => {
+                this.getCurrent();
+              }, 60000);
+            }
+            
+          )
+      }
+    )
+    
+  }
+
+  ionViewDidLeave() {
+    console.log("ionViewDidLeave()")
+    clearTimeout(this.timer);
+
+    this.ellicoreProvider.db.get("controll").then(
+      controll => {
+        controll.running = false;
+          this.ellicoreProvider.db.put(controll).then(
+            ok => {
+              console.log("stopping !!")
+              this.sync();
+            }
+            
+          )
+      }
+    )
+
   }
 
   sync() {
@@ -47,6 +94,7 @@ export class EllicorePage {
     this.ellicoreProvider.db.get('current').then(
       result => {
         console.log("current", result);
+        this.current = result;
       },
 
       error => {}

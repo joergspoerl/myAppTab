@@ -14,5 +14,12 @@
 
 
 <ion-content padding>
-
+<ion-list  *ngIf="current && current.tristar">
+  <ion-item>
+    {{ current.date | date:'yy:MM:dd HH:mm:ss'}}
+  </ion-item>
+  <ion-item>
+    {{ current.tristar.battsV | number:'2.2-2'}} V
+  </ion-item>
+</ion-list>
 </ion-content>

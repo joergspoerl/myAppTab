@@ -9,6 +9,7 @@ import { wSettingsPage } from '../wSettings/wSettings'
 })
 export class WeatherPage {
   weather: any;
+  timer: any;
   location: {
     city: string,
     state: string
@@ -25,16 +26,26 @@ export class WeatherPage {
 }
 
   ionViewWillEnter() {
+  }
 
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter()")
 
     setTimeout( () => {
       this.getWeather();
     }, 200);
 
-    setInterval( () => {
+    this.timer = setInterval( () => {
       this.getWeather();
     }, 60000);
+
   }
+
+  ionViewDidLeave() {
+    console.log("ionViewDidLeave()")
+    clearInterval(this.timer);
+  }
+
 
   getWeather() {
     this.weatherProvider.getWeather().subscribe(weather => { console.log(weather); this.weather = weather })
