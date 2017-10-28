@@ -17,10 +17,10 @@ import { EllicoreProvider } from '../../providers/ellicore/ellicore'
 export class EllicorePage {
 
   timer: any;
-  current: any = {};
+  current: any;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public ellicoreProvider: EllicoreProvider
   ) {
@@ -32,72 +32,78 @@ export class EllicorePage {
 
   ionViewDidEnter() {
     console.log("ionViewDidEnter()")
+    this.syncEvents();
+    this.initTimer();
+  }
+
+  syncEvents() {
+    var self = this;
+    this.ellicoreProvider.syncHandler = this.ellicoreProvider.db.sync(this.ellicoreProvider.dbRemote, {
+      live: true,
+      retry: true
+    }).on('change', function (change) {
+      // yo, something changed!
+      console.log('==> change: ', change);
+      //console.log('==> change docs: ', JSON.stringify(change));
+      change.change.docs.forEach(item => {
+        if (item._id == 'current') {
+          self.current = item;
+          console.log('current changed !', item);
+        }
+
+      })
+      //writeCurrent();
+    }).on('paused', function (info) {
+      // replication was paused, usually because of a lost connection
+      console.log('==> paused: ', info);
+    }).on('active', function (info) {
+      // replication was resumed
+      console.log('==> active: ', info);
+    }).on('error', function (err) {
+      // totally unhandled error (shouldn't happen)
+      console.log('==> error: ', err);
+    });
+
+  }
+
+  requestData() {
 
     this.ellicoreProvider.db.get("controll").then(
       controll => {
-        controll.running = true;
-          this.ellicoreProvider.db.put(controll).then(
-            ok => {
-              console.log("running !!")
-              this.sync();
-
-              setTimeout( () => {
-                this.getCurrent();
-              }, 200);
-          
-              this.timer = setInterval( () => {
-                this.getCurrent();
-              }, 60000);
-            }
-            
-          )
+        controll.request = "getnew";
+        this.ellicoreProvider.db.put(controll).then(
+          ok => {
+            console.log("getnew !!")
+          }
+        )
       }
     )
-    
   }
+
+  initTimer() {
+    this.timer = setInterval(() => {
+      this.requestData();
+    }, 10000);
+  }
+
 
   ionViewDidLeave() {
     console.log("ionViewDidLeave()")
+
+    this.ellicoreProvider.syncHandler.cancel();
     clearTimeout(this.timer);
 
-    this.ellicoreProvider.db.get("controll").then(
-      controll => {
-        controll.running = false;
-          this.ellicoreProvider.db.put(controll).then(
-            ok => {
-              console.log("stopping !!")
-              this.sync();
-            }
-            
-          )
-      }
-    )
-
   }
 
-  sync() {
-    console.log("sync start")
-    this.ellicoreProvider.db.sync(this.ellicoreProvider.dbRemote).then(
-      ok => {
-        console.log("sync", ok);
-        this.getCurrent();
-      },
 
-      error => {
-        console.log("sync error", error);        
-      }
-    )
-    
-  }
-
-  getCurrent () {
+  getCurrent() {
     this.ellicoreProvider.db.get('current').then(
       result => {
         console.log("current", result);
         this.current = result;
       },
 
-      error => {}
+      error => { }
     )
 
   }

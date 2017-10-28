@@ -19,6 +19,7 @@ export class EllicoreProvider {
 
   db: any;
   dbRemote: any;
+  syncHandler: any;
 
   constructor(public http: Http) {
     console.log('Hello EllicoreProvider Provider');
