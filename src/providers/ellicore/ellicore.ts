@@ -7,6 +7,7 @@ import PouchDB from 'pouchdb';
 import find from 'pouchdb-find';
 
 import { ToastController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
 /*
   Generated class for the EllicoreProvider provider.
@@ -20,22 +21,111 @@ export class EllicoreProvider {
   db: any;
   dbRemote: any;
   syncHandler: any;
+  current: any;
+  observer: any;
+  timer: any;
+  
 
   constructor(public http: Http) {
     console.log('Hello EllicoreProvider Provider');
 
-        // init 
-        PouchDB.plugin(find);
-        this.initPouchDB();
+    // init 
+    PouchDB.plugin(find);
+    this.initPouchDB();
   }
 
 
   initPouchDB() {
-    this.db = new PouchDB('ellicore-current');
+    const pouchOptions = {
+      auto_compaction: true,
+      revs_limit: 1
+  }
+    this.db = new PouchDB('ellicore-current', pouchOptions);
     console.log("db", this.db);
 
     this.dbRemote = new PouchDB('https://ellicore:ellicore@jrg.deneb.uberspace.de/couchdb/ellicore-current');
-    console.log("dbRemote", this.dbRemote);
+    console.log("dbRemote", this.dbRemote, pouchOptions);
+  }
+
+  syncEvents() {
+    var self = this;
+    this.syncHandler = this.db.sync(this.dbRemote, {
+      live: true,
+      retry: true
+    }).on('change', function (change) {
+      // yo, something changed!
+      console.log('==> change: ', change);
+      //console.log('==> change docs: ', JSON.stringify(change));
+      change.change.docs.forEach(item => {
+        if (item._id == 'current') {
+          self.current = item;
+          console.log('current changed !', item);
+          self.observer.next(item);
+        }
+
+      })
+      //writeCurrent();
+    }).on('paused', function (info) {
+      // replication was paused, usually because of a lost connection
+      console.log('==> paused: ', info);
+    }).on('active', function (info) {
+      // replication was resumed
+      console.log('==> active: ', info);
+    }).on('error', function (err) {
+      // totally unhandled error (shouldn't happen)
+      console.log('==> error: ', err);
+    });
+
+  }
+
+  requestData() {
+
+    this.db.get("controll").then(
+      controll => {
+        controll.request = "getnew";
+        this.db.put(controll).then(
+          ok => {
+            console.log("====> REQUEST getnew !!")
+          }
+        )
+      },
+      error => {
+        if (error.status == 404) {
+          var controll_default = {
+            _id: 'controll',
+            request: 'getnew'
+          }
+          this.db.put(controll_default).then(
+            ok => {
+              console.log("====> REQUEST getnew !!")
+            })
+          }
+        console.log("====> REQUEST ", error);
+      }
+    )
+  }
+
+  initTimer() {
+    this.timer = setInterval(() => {
+      this.requestData();
+    }, 10000);
+  }
+
+
+  data() {
+
+    this.syncEvents();
+    this.initTimer();
+
+    return Observable.create(observer => {
+      this.observer = observer;
+      return () => { 
+        // unsubscribe function
+        console.log("==> unsubscribe data")
+        clearTimeout( this.timer)
+        this.syncHandler.cancel() 
+      } 
+    })
   }
 
 }

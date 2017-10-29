@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { EllicoreProvider } from '../../providers/ellicore/ellicore'
+import { EllicoreProvider } from '../../providers/ellicore/ellicore';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/share';
+import { DisposableFn } from '@angular/core/src/view';
+
 
 /**
  * Generated class for the EllicorePage page.
@@ -16,95 +21,55 @@ import { EllicoreProvider } from '../../providers/ellicore/ellicore'
 })
 export class EllicorePage {
 
-  timer: any;
+  current$: Observable<any>;
+  currentDispose: any;
   current: any;
+  test: number = 0;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public zone: NgZone,
     public ellicoreProvider: EllicoreProvider
   ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EllicorePage');
+    //this.testObserver();
+
+    this.current$ = this.ellicoreProvider.data();
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter()")
-    this.syncEvents();
-    this.initTimer();
+    console.log("ionViewDidEnter()");
+    this.startObserver()
   }
 
-  syncEvents() {
-    var self = this;
-    this.ellicoreProvider.syncHandler = this.ellicoreProvider.db.sync(this.ellicoreProvider.dbRemote, {
-      live: true,
-      retry: true
-    }).on('change', function (change) {
-      // yo, something changed!
-      console.log('==> change: ', change);
-      //console.log('==> change docs: ', JSON.stringify(change));
-      change.change.docs.forEach(item => {
-        if (item._id == 'current') {
-          self.current = item;
-          console.log('current changed !', item);
-        }
 
-      })
-      //writeCurrent();
-    }).on('paused', function (info) {
-      // replication was paused, usually because of a lost connection
-      console.log('==> paused: ', info);
-    }).on('active', function (info) {
-      // replication was resumed
-      console.log('==> active: ', info);
-    }).on('error', function (err) {
-      // totally unhandled error (shouldn't happen)
-      console.log('==> error: ', err);
-    });
-
-  }
-
-  requestData() {
-
-    this.ellicoreProvider.db.get("controll").then(
-      controll => {
-        controll.request = "getnew";
-        this.ellicoreProvider.db.put(controll).then(
-          ok => {
-            console.log("getnew !!")
-          }
-        )
-      }
-    )
-  }
-
-  initTimer() {
-    this.timer = setInterval(() => {
-      this.requestData();
-    }, 10000);
-  }
 
 
   ionViewDidLeave() {
     console.log("ionViewDidLeave()")
 
-    this.ellicoreProvider.syncHandler.cancel();
-    clearTimeout(this.timer);
+    //this.ellicoreProvider.syncHandler.cancel();
+    //clearTimeout(this.timer);
+
+    this.currentDispose.unsubscribe();
 
   }
 
 
-  getCurrent() {
-    this.ellicoreProvider.db.get('current').then(
-      result => {
-        console.log("current", result);
-        this.current = result;
-      },
 
-      error => { }
+  startObserver() {
+    this.currentDispose = this.current$.subscribe(
+      current => {
+        this.zone.run(() => {
+          this.current = current;
+          this.test = this.test + 1;
+          console.log("****** subsribe: ", current)  
+        })
+      }
     )
-
   }
 }
