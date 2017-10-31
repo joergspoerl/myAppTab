@@ -62,7 +62,9 @@ export class EllicorePage {
 
 
   startObserver() {
-    this.currentDispose = this.current$.subscribe(
+    console.log("startObserver ...")
+    //this.current$ = this.ellicoreProvider.data();
+    this.currentDispose = this.ellicoreProvider.data().subscribe(
       current => {
         this.zone.run(() => {
           this.current = current;

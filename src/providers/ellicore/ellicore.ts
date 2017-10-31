@@ -24,7 +24,7 @@ export class EllicoreProvider {
   current: any;
   observer: any;
   timer: any;
-  
+
 
   constructor(public http: Http) {
     console.log('Hello EllicoreProvider Provider');
@@ -38,14 +38,28 @@ export class EllicoreProvider {
   initPouchDB() {
     const pouchOptions = {
       auto_compaction: true,
-      revs_limit: 1
-  }
+      revs_limit: 2
+    }
     this.db = new PouchDB('ellicore-current', pouchOptions);
     console.log("db", this.db);
 
     this.dbRemote = new PouchDB('https://ellicore:ellicore@jrg.deneb.uberspace.de/couchdb/ellicore-current');
     console.log("dbRemote", this.dbRemote, pouchOptions);
+
+    this.compact();
   }
+
+  compact() {
+    this.db.compact().then(
+      ok => console.log("--> db compact !"),
+      er => console.log("--> db compact ERROR !", er)
+    );
+    this.dbRemote.compact().then(
+      ok => console.log("--> dbRemote compact !"),
+      er => console.log("--> dbRemote compact ERROR !", er)
+    );;
+  }
+
 
   syncEvents() {
     var self = this;
@@ -99,7 +113,7 @@ export class EllicoreProvider {
             ok => {
               console.log("====> REQUEST getnew !!")
             })
-          }
+        }
         console.log("====> REQUEST ", error);
       }
     )
@@ -119,12 +133,12 @@ export class EllicoreProvider {
 
     return Observable.create(observer => {
       this.observer = observer;
-      return () => { 
+      return () => {
         // unsubscribe function
         console.log("==> unsubscribe data")
-        clearTimeout( this.timer)
-        this.syncHandler.cancel() 
-      } 
+        clearTimeout(this.timer)
+        this.syncHandler.cancel()
+      }
     })
   }
 
