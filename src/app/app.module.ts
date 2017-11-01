@@ -44,7 +44,7 @@ import { ContactProvider } from '../providers/contact/contact';
 import { SearchPipe } from '../pipe/searchPipe'
 import { ContactDetailsPage } from '../pages/contact-details/contact-details'
 import { EllicoreProvider } from '../providers/ellicore/ellicore';
-
+import { LoggingProvider } from '../providers/logging/logging';
 
 @NgModule({
   declarations: [
@@ -104,7 +104,9 @@ import { EllicoreProvider } from '../providers/ellicore/ellicore';
     Geolocation,
     File,
     ContactProvider,
-    EllicoreProvider
+    EllicoreProvider,
+    LoggingProvider
   ]
 })
 export class AppModule {}
+

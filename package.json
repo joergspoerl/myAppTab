@@ -34,7 +34,7 @@
         "cordova-ios": "^4.5.1",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-crosswalk-webview": "^2.3.0",
-        "cordova-plugin-device": "^1.1.4",
+        "cordova-plugin-device": "^1.1.6",
         "cordova-plugin-file": "^4.3.3",
         "cordova-plugin-geolocation": "^2.4.3",
         "cordova-plugin-ionic-webview": "^1.1.14",
@@ -49,6 +49,7 @@
         "lab": "^14.3.1",
         "pouchdb": "^6.3.4",
         "pouchdb-find": "^6.3.4",
+        "prettyjson": "^1.2.1",
         "rxjs": "5.4.3",
         "sw-toolbox": "3.6.0",
         "zone.js": "0.8.18"
@@ -65,7 +66,6 @@
             "ios"
         ],
         "plugins": {
-            "cordova-plugin-device": {},
             "cordova-plugin-ionic-webview": {},
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-statusbar": {},
@@ -81,7 +81,8 @@
             "cordova-plugin-geolocation": {
                 "GEOLOCATION_USAGE_DESCRIPTION": " "
             },
-            "cordova-plugin-file": {}
+            "cordova-plugin-file": {},
+            "cordova-plugin-device": {}
         }
     }
 }

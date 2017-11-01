@@ -8,13 +8,15 @@ import find from 'pouchdb-find';
 
 import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-
+import { LoggingProvider } from '../logging/logging'
 /*
   Generated class for the EllicoreProvider provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
+
+
 @Injectable()
 export class EllicoreProvider {
 
@@ -26,8 +28,14 @@ export class EllicoreProvider {
   timer: any;
 
 
-  constructor(public http: Http) {
+  constructor(
+    public http: Http,
+    public log: LoggingProvider
+  ) {
     console.log('Hello EllicoreProvider Provider');
+
+    log.debug ("Hello EllicoreProvider Provider")
+    //log.debug ()
 
     // init 
     PouchDB.plugin(find);

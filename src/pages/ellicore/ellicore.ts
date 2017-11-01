@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
 import { DisposableFn } from '@angular/core/src/view';
 
+declare var device:any 
 
 /**
  * Generated class for the EllicorePage page.
@@ -30,14 +31,15 @@ export class EllicorePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public zone: NgZone,
-    public ellicoreProvider: EllicoreProvider
+    public ellicoreProvider: EllicoreProvider,
   ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EllicorePage');
     //this.testObserver();
-
+    console.log("device", device)
+    
     this.current$ = this.ellicoreProvider.data();
   }
 
