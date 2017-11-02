@@ -37,8 +37,6 @@ export class EllicorePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EllicorePage');
-    //this.testObserver();
-    console.log("device", device)
     
     this.current$ = this.ellicoreProvider.data();
   }
